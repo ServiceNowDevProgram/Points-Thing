@@ -1,0 +1,22 @@
+display_information:
+  name: Points Thing
+features:
+  bot_user:
+    display_name: Points Thing
+    always_online: false
+oauth_config:
+  scopes:
+    bot:
+      - channels:history
+      - chat:write
+      - groups:history
+      - users:read
+settings:
+  event_subscriptions:
+    request_url: https://devprogramresources.service-now.com/api/x_snc_pointsthing/points_thing
+    bot_events:
+      - message.channels
+      - message.groups
+  org_deploy_enabled: false
+  socket_mode_enabled: false
+  token_rotation_enabled: false
