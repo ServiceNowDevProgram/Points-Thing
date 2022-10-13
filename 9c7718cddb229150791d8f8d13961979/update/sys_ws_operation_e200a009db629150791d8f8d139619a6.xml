@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ws_operation">
+    <sys_ws_operation action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <consumes>application/json,application/xml,text/xml</consumes>
+        <consumes_customized>false</consumes_customized>
+        <default_operation_uri/>
+        <enforce_acl/>
+        <http_method>POST</http_method>
+        <name>Event Handler</name>
+        <operation_script><![CDATA[(function process(/*RESTAPIRequest*/ request, /*RESTAPIResponse*/ response) {
+
+	if (request.body.data.challenge) {
+		response.setStatus(200); 
+		response.setContentType('text/plain');
+		response.getStreamWriter().writeString(request.body.data.challenge); 
+	} else {
+		if (request.body.data.event.bot_id) return;
+		var payload = new GlideRecord('x_snc_pointsthing_payload'); 
+		payload.initialize(); 
+		payload.payload = JSON.stringify(request.body.data, null, 2); 
+		payload.insert(); 
+	}
+
+})(request, response);]]></operation_script>
+        <operation_uri>/api/x_snc_pointsthing/points_thing</operation_uri>
+        <produces>application/json,application/xml,text/xml</produces>
+        <produces_customized>false</produces_customized>
+        <relative_path>/</relative_path>
+        <request_example/>
+        <requires_acl_authorization>false</requires_acl_authorization>
+        <requires_authentication>false</requires_authentication>
+        <requires_snc_internal_role>false</requires_snc_internal_role>
+        <short_description/>
+        <sys_class_name>sys_ws_operation</sys_class_name>
+        <sys_created_by>earl.duque</sys_created_by>
+        <sys_created_on>2022-10-13 03:27:42</sys_created_on>
+        <sys_id>e200a009db629150791d8f8d139619a6</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>Event Handler</sys_name>
+        <sys_package display_value="Points Thing" source="x_snc_pointsthing">9c7718cddb229150791d8f8d13961979</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Points Thing">9c7718cddb229150791d8f8d13961979</sys_scope>
+        <sys_update_name>sys_ws_operation_e200a009db629150791d8f8d139619a6</sys_update_name>
+        <sys_updated_by>earl.duque</sys_updated_by>
+        <sys_updated_on>2022-10-13 03:28:32</sys_updated_on>
+        <web_service_definition display_value="Points Thing">ffef1009db629150791d8f8d13961963</web_service_definition>
+        <web_service_version/>
+    </sys_ws_operation>
+</record_update>

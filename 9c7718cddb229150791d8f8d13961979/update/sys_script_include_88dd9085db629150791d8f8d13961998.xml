@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <active>true</active>
+        <api_name>x_snc_pointsthing.PointsThing</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <name>PointsThing</name>
+        <script><![CDATA[var PointsThing = Class.create();
+PointsThing.prototype = {
+	initialize: function() {
+		this.token = gs.getProperty("pointsthing.token");
+	},
+
+	establish_user: function(payload_user, increment_point) {
+		var userSysID = '';
+		var user = new GlideRecord('x_snc_pointsthing_user');
+		if (user.get('user_id', payload_user)) {
+			userSysID = user.getUniqueValue();
+		} else {
+			user.newRecord();
+			user.setValue('user_id', payload_user);
+			userSysID = user.insert();
+		}
+		if (increment_point){
+			var score = parseInt(user.getValue('points'));
+			score++;
+			user.setValue('points', score);
+			user.update();
+		}
+		if (!user.getValue('user_name')){
+			this.get_user_info(payload_user, userSysID);
+		}
+		return userSysID;
+	},
+
+	send_chat: function(chat_gr, message, force_thread) {
+		var rm = new sn_ws.RESTMessageV2();
+		rm.setHttpMethod('POST');
+		rm.setEndpoint('https://slack.com/api/chat.postMessage');
+		rm.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+		rm.setRequestHeader("Authorization", "Bearer " + this.token);
+		//rm.setLogLevel('all');
+
+		var bodyString = '';
+		bodyString += '&channel=' + gs.urlEncode(chat_gr.channel);
+		if (chat_gr.thread_ts) {
+			bodyString += '&thread_ts=' + gs.urlEncode(chat_gr.thread_ts);
+		} else if (force_thread) {
+			bodyString += '&thread_ts=' + gs.urlEncode(chat_gr.ts);
+		}
+		if (typeof message == 'object' && message.blocks) {
+			bodyString += '&text=' + gs.urlEncode(message.text);
+			bodyString += '&blocks=' + gs.urlEncode(message.blocks);
+		} else {
+			bodyString += '&text=' + gs.urlEncode(message);
+		}
+		rm.setRequestBody(bodyString);
+		return rm.execute();
+	},
+
+	get_user_info: function(slack_id, record_id) {
+		var rm = new sn_ws.RESTMessageV2();
+		rm.setHttpMethod('POST');
+		rm.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+		rm.setRequestHeader("Authorization", "Bearer " + gs.getProperty("pointsthing.token"));
+		//rm.setLogLevel('all');
+
+		var bodyString = '';
+		bodyString += 'user=' + gs.urlEncode(slack_id);
+		rm.setEndpoint('https://slack.com/api/users.info' + '?' + bodyString);
+		var response = rm.execute();
+		var response_body = JSON.parse(response.getBody());
+
+		if (response_body.user.name) {
+			var grupdate = new GlideRecord('x_snc_pointsthing_user');
+			grupdate.get(record_id);
+			grupdate.setValue('user_name', response_body.user.real_name);
+			grupdate.update();
+			return true;
+		} else {
+			return false;
+		}
+	},
+
+	broadcast_points: function(matches, current){
+		var messages = [];
+		for (var i in matches){
+			if (current.user == matches[i]) {
+				messages.push('No self points!');
+				continue;
+			} else {				
+				var pointsTotal = new GlideRecord("x_snc_pointsthing_user");
+				pointsTotal.get('user_id', matches[i]);
+				
+				var gaPoints = new GlideAggregate('x_snc_pointsthing_point');
+				gaPoints.addQuery('target', pointsTotal.getUniqueValue()); 
+				gaPoints.addAggregate('COUNT');
+				gaPoints.query();
+				if (gaPoints.next()) {
+					var points = gaPoints.getAggregate('COUNT');
+				}
+				
+				messages.push("<@" + matches[i] + "> received a point. You now have " + points + " (" + pointsTotal.getValue('points') + ' total)');
+			}
+		}
+		this.send_chat(current, messages.join('\n'), false);
+	},
+
+	type: 'PointsThing'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>earl.duque</sys_created_by>
+        <sys_created_on>2022-10-13 03:22:36</sys_created_on>
+        <sys_id>88dd9085db629150791d8f8d13961998</sys_id>
+        <sys_mod_count>22</sys_mod_count>
+        <sys_name>PointsThing</sys_name>
+        <sys_package display_value="Points Thing" source="x_snc_pointsthing">9c7718cddb229150791d8f8d13961979</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="Points Thing">9c7718cddb229150791d8f8d13961979</sys_scope>
+        <sys_update_name>sys_script_include_88dd9085db629150791d8f8d13961998</sys_update_name>
+        <sys_updated_by>earl.duque</sys_updated_by>
+        <sys_updated_on>2022-10-13 05:51:53</sys_updated_on>
+    </sys_script_include>
+</record_update>

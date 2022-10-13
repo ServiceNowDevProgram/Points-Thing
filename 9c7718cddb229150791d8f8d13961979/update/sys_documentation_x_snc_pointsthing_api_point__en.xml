@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_documentation element="" label="API Point" language="en" table="x_snc_pointsthing_api_point">
+        <sys_documentation action="INSERT_OR_UPDATE">
+            <element/>
+            <help/>
+            <hint/>
+            <label>API Point</label>
+            <language>en</language>
+            <name>x_snc_pointsthing_api_point</name>
+            <plural>API Points</plural>
+            <sys_class_name>sys_documentation</sys_class_name>
+            <sys_created_by>earl.duque</sys_created_by>
+            <sys_created_on>2022-10-13 03:05:35</sys_created_on>
+            <sys_id>209b1005db629150791d8f8d13961931</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>API Point</sys_name>
+            <sys_package display_value="Points Thing" source="x_snc_pointsthing">9c7718cddb229150791d8f8d13961979</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="Points Thing">9c7718cddb229150791d8f8d13961979</sys_scope>
+            <sys_update_name>sys_documentation_x_snc_pointsthing_api_point__en</sys_update_name>
+            <sys_updated_by>earl.duque</sys_updated_by>
+            <sys_updated_on>2022-10-13 03:05:35</sys_updated_on>
+            <url/>
+            <url_target/>
+        </sys_documentation>
+    </sys_documentation>
+</record_update>

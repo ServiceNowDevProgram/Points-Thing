@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element label="User" max_length="40" name="x_snc_pointsthing_user" type="collection">
+        <element default="0" label="Points" max_length="40" name="points" type="integer"/>
+        <element label="User ID" max_length="40" name="user_id" type="string"/>
+        <element display="true" label="User name" max_length="40" name="user_name" type="string"/>
+    </element>
+</database>

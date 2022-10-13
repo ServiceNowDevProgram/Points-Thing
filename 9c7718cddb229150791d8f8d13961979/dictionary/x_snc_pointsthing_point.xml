@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element label="Point" max_length="40" name="x_snc_pointsthing_point" type="collection">
+        <element label="Source API" max_length="32" name="api" reference="x_snc_pointsthing_api_point" type="reference"/>
+        <element label="Source Chat" max_length="32" name="chat" reference="x_snc_pointsthing_chat" type="reference"/>
+        <element label="Giver" max_length="32" name="giver" reference="x_snc_pointsthing_user" type="reference"/>
+        <element label="Target" max_length="32" name="target" reference="x_snc_pointsthing_user" type="reference"/>
+        <index name="index">
+            <element name="chat"/>
+        </index>
+        <index name="index2">
+            <element name="api"/>
+        </index>
+        <index name="index3">
+            <element name="giver"/>
+        </index>
+        <index name="index4">
+            <element name="target"/>
+        </index>
+    </element>
+</database>

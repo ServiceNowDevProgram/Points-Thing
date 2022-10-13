@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element label="API Point" max_length="40" name="x_snc_pointsthing_api_point" type="collection">
+        <element label="Giver" max_length="32" name="giver" reference="x_snc_pointsthing_user" type="reference"/>
+        <element label="Reason" max_length="40" name="reason" type="string"/>
+        <element label="Source" max_length="40" name="source" type="string"/>
+        <element label="Target" max_length="32" name="target" reference="x_snc_pointsthing_user" type="reference"/>
+        <index name="index">
+            <element name="giver"/>
+        </index>
+        <index name="index2">
+            <element name="target"/>
+        </index>
+    </element>
+</database>

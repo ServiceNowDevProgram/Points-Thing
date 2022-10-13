@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element label="Chat" max_length="40" name="x_snc_pointsthing_chat" type="collection">
+        <element label="Channel" max_length="40" name="channel" type="string"/>
+        <element label="Text" max_length="4000" name="text" type="string"/>
+        <element label="Thread timestamp" max_length="40" name="thread_ts" type="string"/>
+        <element label="Timestamp" max_length="40" name="ts" type="string"/>
+        <element label="User" max_length="32" name="user" reference="x_snc_pointsthing_user" type="reference"/>
+        <index name="index">
+            <element name="user"/>
+        </index>
+    </element>
+</database>

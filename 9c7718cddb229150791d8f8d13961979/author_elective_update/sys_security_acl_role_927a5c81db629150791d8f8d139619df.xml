@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_security_acl_role">
+    <sys_security_acl_role action="DELETE">
+        <sys_class_name>sys_security_acl_role</sys_class_name>
+        <sys_created_by>earl.duque</sys_created_by>
+        <sys_created_on>2022-10-13 03:00:47</sys_created_on>
+        <sys_id>927a5c81db629150791d8f8d139619df</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_snc_pointsthing_4000.x_snc_pointsthing.user</sys_name>
+        <sys_package display_value="Points Thing" source="x_snc_pointsthing">9c7718cddb229150791d8f8d13961979</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Points Thing">9c7718cddb229150791d8f8d13961979</sys_scope>
+        <sys_security_acl display_value="x_snc_pointsthing_4000">9e7a5c81db629150791d8f8d139619db</sys_security_acl>
+        <sys_update_name>sys_security_acl_role_927a5c81db629150791d8f8d139619df</sys_update_name>
+        <sys_updated_by>earl.duque</sys_updated_by>
+        <sys_updated_on>2022-10-13 03:00:47</sys_updated_on>
+        <sys_user_role display_value="x_snc_pointsthing.user" name="x_snc_pointsthing.user">d0595841db629150791d8f8d1396198d</sys_user_role>
+        <transaction_id/>
+    </sys_security_acl_role>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Points Thing">9c7718cddb229150791d8f8d13961979</application>
+        <file_path/>
+        <instance_id>313436a1dbe4a7080e785d00cf961917</instance_id>
+        <instance_name>devprogramresources</instance_name>
+        <name>sys_security_acl_role_927a5c81db629150791d8f8d139619df</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_security_acl_role"><sys_security_acl_role action="INSERT_OR_UPDATE"><sys_class_name>sys_security_acl_role</sys_class_name><sys_created_by>earl.duque</sys_created_by><sys_created_on>2022-10-13 03:00:47</sys_created_on><sys_id>927a5c81db629150791d8f8d139619df</sys_id><sys_mod_count>0</sys_mod_count><sys_name>x_snc_pointsthing_4000.x_snc_pointsthing.user</sys_name><sys_package display_value="Points Thing" source="x_snc_pointsthing">9c7718cddb229150791d8f8d13961979</sys_package><sys_policy/><sys_scope display_value="Points Thing">9c7718cddb229150791d8f8d13961979</sys_scope><sys_security_acl display_value="x_snc_pointsthing_4000">9e7a5c81db629150791d8f8d139619db</sys_security_acl><sys_update_name>sys_security_acl_role_927a5c81db629150791d8f8d139619df</sys_update_name><sys_updated_by>earl.duque</sys_updated_by><sys_updated_on>2022-10-13 03:00:47</sys_updated_on><sys_user_role display_value="x_snc_pointsthing.user" name="x_snc_pointsthing.user">d0595841db629150791d8f8d1396198d</sys_user_role><transaction_id/></sys_security_acl_role></record_update>]]></payload>
+        <payload_hash>329330721</payload_hash>
+        <record_name>x_snc_pointsthing_4000.x_snc_pointsthing.user</record_name>
+        <reverted_from/>
+        <source>147718cddb229150791d8f8d1396197c</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>earl.duque</sys_created_by>
+        <sys_created_on>2022-10-13 03:00:47</sys_created_on>
+        <sys_id>527a5c81db629150791d8f8d139619e2</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>183cf498c280000001</sys_recorded_at>
+        <sys_updated_by>earl.duque</sys_updated_by>
+        <sys_updated_on>2022-10-13 03:00:47</sys_updated_on>
+        <type>Access Roles</type>
+        <update_guid>9a7a5c811f629150b4070b5581445be1</update_guid>
+        <update_guid_history>9a7a5c811f629150b4070b5581445be1:329330721</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="x_snc_pointsthing_4000.x_snc_pointsthing.user">b99a50c1db629150791d8f8d13961951</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>earl.duque</sys_created_by>
+        <sys_created_on>2022-10-13 03:01:18</sys_created_on>
+        <sys_db_object display_value="" name="sys_security_acl_role">sys_security_acl_role</sys_db_object>
+        <sys_id>4c0f7805f14147889ce3b5b121605810</sys_id>
+        <sys_metadata>927a5c81db629150791d8f8d139619df</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_snc_pointsthing_4000.x_snc_pointsthing.user</sys_name>
+        <sys_package display_value="Points Thing" source="x_snc_pointsthing">9c7718cddb229150791d8f8d13961979</sys_package>
+        <sys_parent display_value="">9e7a5c81db629150791d8f8d139619db</sys_parent>
+        <sys_policy/>
+        <sys_scope display_value="Points Thing">9c7718cddb229150791d8f8d13961979</sys_scope>
+        <sys_scope_delete display_value="">11330a3f0283433896a64cb3ccb419d9</sys_scope_delete>
+        <sys_update_name>sys_security_acl_role_927a5c81db629150791d8f8d139619df</sys_update_name>
+        <sys_update_version display_value="sys_security_acl_role_927a5c81db629150791d8f8d139619df">527a5c81db629150791d8f8d139619e2</sys_update_version>
+        <sys_updated_by>earl.duque</sys_updated_by>
+        <sys_updated_on>2022-10-13 03:01:18</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>
