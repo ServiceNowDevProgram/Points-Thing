@@ -52,7 +52,7 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>692ca881dba29150791d8f8d139619ee</sys_id>
-        <sys_mod_count>6</sys_mod_count>
+        <sys_mod_count>8</sys_mod_count>
         <sys_name>Convert to chat</sys_name>
         <sys_overrides/>
         <sys_package display_value="Points Thing" source="x_snc_pointsthing">9c7718cddb229150791d8f8d13961979</sys_package>
@@ -60,7 +60,7 @@
         <sys_scope display_value="Points Thing">9c7718cddb229150791d8f8d13961979</sys_scope>
         <sys_update_name>sys_script_692ca881dba29150791d8f8d139619ee</sys_update_name>
         <sys_updated_by>earl.duque</sys_updated_by>
-        <sys_updated_on>2022-10-13 05:33:56</sys_updated_on>
+        <sys_updated_on>2022-10-14 03:27:22</sys_updated_on>
         <template/>
         <when>async_always</when>
     </sys_script>
