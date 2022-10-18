@@ -20,7 +20,7 @@
     },
     "settings": {
         "event_subscriptions": {
-            "request_url": "https://devprogramresources.service-now.com/api/x_snc_pointsthing/points_thing",
+            "request_url": "https://YOURINSTANCE.service-now.com/api/x_snc_pointsthing/points_thing",
             "bot_events": [
                 "message.channels",
                 "message.groups"
