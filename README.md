@@ -26,7 +26,7 @@ The bot evolved from there and functionality has been added onto it ever since i
 2. Go to your ServiceNow instance
 3. Go to `System Applications` => `Studio`
 4. Once Studio loads, select `Import From Source Control`
-5. Use your forked repo to [Import your application](https://developer.servicenow.com/dev.do#!/learn/learning-plans/quebec/new_to_servicenow/app_store_learnv2_devenvironment_quebec_importing_an_application_from_source_control)
+5. Use your forked repo to [Import your application](https://developer.servicenow.com/dev.do#!/learn/learning-plans/tokyo/new_to_servicenow/app_store_learnv2_devenvironment_tokyo_importing_an_application_from_source_control)
 6. See below on how to get this bot working on your own slack server
 7. Make updates to the application (see [CONTRIBUTING.md](CONTRIBUTING.md) for additional details)
 8. In Studio, commit your changes to source control
