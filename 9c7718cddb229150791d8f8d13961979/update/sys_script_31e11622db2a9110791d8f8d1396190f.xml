@@ -18,7 +18,7 @@
         <filter_condition/>
         <is_rest>false</is_rest>
         <message/>
-        <name>Leaderboard</name>
+        <name>Leaderboard and Points</name>
         <order>100</order>
         <priority>100</priority>
         <rest_method/>
@@ -33,6 +33,13 @@
 
 	if (leaderboardMatches) {
 		new x_snc_pointsthing.PointsThing().leaderboard(current, true);
+	} else {
+		
+		var pointsMatches = current.text.match(/!(my)*points/gmi);
+		
+		if (pointsMatches){
+			new x_snc_pointsthing.PointsThing().tell_points(current);
+		}
 	}
 
 })(current, previous);]]></script>
@@ -42,15 +49,15 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>31e11622db2a9110791d8f8d1396190f</sys_id>
-        <sys_mod_count>0</sys_mod_count>
-        <sys_name>Leaderboard</sys_name>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>Leaderboard and Points</sys_name>
         <sys_overrides/>
         <sys_package display_value="Points Thing" source="x_snc_pointsthing">9c7718cddb229150791d8f8d13961979</sys_package>
         <sys_policy/>
         <sys_scope display_value="Points Thing">9c7718cddb229150791d8f8d13961979</sys_scope>
         <sys_update_name>sys_script_31e11622db2a9110791d8f8d1396190f</sys_update_name>
         <sys_updated_by>earl.duque</sys_updated_by>
-        <sys_updated_on>2022-10-18 03:38:42</sys_updated_on>
+        <sys_updated_on>2022-10-19 05:33:05</sys_updated_on>
         <template/>
         <when>async_always</when>
     </sys_script>

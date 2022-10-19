@@ -95,8 +95,8 @@ PointsThing.prototype = {
 			if (users_completed.indexOf(matches[i]) > -1) continue;
 			else users_completed.push(matches[i]);
 
-			if (current.user == matches[i]) {
-				messages.push('No self points!');
+			if (current.user.user_id == matches[i]) {
+				messages.push('<@' + matches[i] + '> No self points!');
 				continue;
 			} else {
 				var pointsTotal = new GlideRecord("x_snc_pointsthing_user");
@@ -113,11 +113,12 @@ PointsThing.prototype = {
 
 				var user = '<@' + matches[i] + '>';
 				var message_gr = this.milestone_check(total);
+				var emoji = ' ' + this.my_points(matches[i]).emoji;
 				var message = new GlideScopedEvaluator().evaluateScript(message_gr, 'message', {'user': user, 'total': total, 'points': points});
 				if (message_gr.getValue('send_to_channel') === '1') this.send_chat({'channel':gs.getProperty('x_snc_pointsthing.milestone_channel')}, message, false);
 				messages.push([
 					message,
-					'(' + total + ' total)'
+					'(' + total + ' total)' + emoji
 				].join(' '));
 			}
 		}
@@ -144,6 +145,51 @@ PointsThing.prototype = {
 			}
 			return default_message;
 		}
+	},
+	
+	tell_points: function(chat_gr){
+		var my_points = this.my_points(chat_gr.user.user_id);
+		var emoji = ' ' + my_points.emoji;
+		this.send_chat(chat_gr, '<@' + chat_gr.user.user_id + '> You have received *' + my_points.points + '* points in the last 90 days, for a total of *' + my_points.total + '* all time.' + emoji, false);
+	},
+	
+	my_points: function(id){
+		var count = new GlideAggregate('x_snc_pointsthing_point');
+			count.addEncodedQuery('sys_created_onONLast 90 days@javascript:gs.beginningOfLast90Days()@javascript:gs.endOfLast90Days()^targetISNOTEMPTY');
+			count.addAggregate('COUNT(DISTINCT', 'target');
+			count.setGroup(false);
+			count.query();
+			count.next();
+			var total_users = parseInt(count.getAggregate('COUNT(DISTINCT', 'target'));
+			
+			count.orderByAggregate('COUNT', 'target');
+			count.addAggregate('COUNT', 'target');
+			count.setGroup(true);
+			count.query();
+			var rank = 1;
+			while (count.next()){
+				if (count.target.user_id.includes(id)){
+					var emoji = '';
+					if (rank == 1) emoji = ':first_place_medal:';
+					else if (rank == 2) emoji = ':second_place_medal:';
+					else if (rank == 3) emoji = ':third_place_medal:';
+					else if (rank < Math.ceil(total_users * .05)) emoji = ':star2:';
+					else if (rank < Math.ceil(total_users * .1)) emoji = ':star:';
+					else if (rank < Math.ceil(total_users * .25)) emoji = ':sparkles:';
+					return {
+						'id': id,
+						'points': count.getAggregate('COUNT', 'target'),
+						'total': count.target.points.toString(),
+						'emoji': emoji,
+						'percentile': Math.round(((total_users-rank)/total_users*100) / 10) * 10,
+						'total_users': total_users,
+						'rank': rank
+					};
+				} else {
+					rank++;
+					continue;
+				}
+			}
 	},
 
 	leaderboard: function(chat_gr, send){
@@ -173,7 +219,7 @@ PointsThing.prototype = {
 				else if (rank == 2) item = ':second_place_medal: ' + user_name + ' - ' + count.getAggregate('COUNT', 'target') + ' points';
 				else if (rank == 3) item = ':third_place_medal: ' + user_name + ' - ' + count.getAggregate('COUNT', 'target') + ' points';
 				else if (rank > 3 && rank < top_10_percent) item = user_name + ' (' + count.getAggregate('COUNT', 'target') + ')';
-				else if (chat_gr && chat_gr.user && count.target.user_id.includes(chat_gr.user.user_id)) item = '...' + user_name + ' (' + count.getAggregate('COUNT', 'target') + ' points, ~' + (Math.round(rank / 10) * 10) + ' percentile rounded to the nearest 10)';
+				else if (chat_gr && chat_gr.user && count.target.user_id.includes(chat_gr.user.user_id)) item = '...' + user_name + ' (' + count.getAggregate('COUNT', 'target') + ' points, ~' + (Math.round(((total_users-rank)/total_users*100) / 10) * 10) + 'th percentile)';
 				else {
 					rank++;
 					continue;
@@ -203,13 +249,13 @@ PointsThing.prototype = {
         <sys_created_by>earl.duque</sys_created_by>
         <sys_created_on>2022-10-13 03:22:36</sys_created_on>
         <sys_id>88dd9085db629150791d8f8d13961998</sys_id>
-        <sys_mod_count>63</sys_mod_count>
+        <sys_mod_count>87</sys_mod_count>
         <sys_name>PointsThing</sys_name>
         <sys_package display_value="Points Thing" source="x_snc_pointsthing">9c7718cddb229150791d8f8d13961979</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Points Thing">9c7718cddb229150791d8f8d13961979</sys_scope>
         <sys_update_name>sys_script_include_88dd9085db629150791d8f8d13961998</sys_update_name>
         <sys_updated_by>earl.duque</sys_updated_by>
-        <sys_updated_on>2022-10-18 23:07:21</sys_updated_on>
+        <sys_updated_on>2022-10-19 05:36:05</sys_updated_on>
     </sys_script_include>
 </record_update>

@@ -36,6 +36,7 @@
 	}
 
 	for (var j in matches){
+		if (matches[j] == current.user.user_id) continue;
 		var point = new GlideRecord("x_snc_pointsthing_point");
 		point.newRecord();
 		point.setValue('giver', current.user);
@@ -53,7 +54,7 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>b91e6805dba29150791d8f8d13961933</sys_id>
-        <sys_mod_count>11</sys_mod_count>
+        <sys_mod_count>12</sys_mod_count>
         <sys_name>Create point</sys_name>
         <sys_overrides/>
         <sys_package display_value="Points Thing" source="x_snc_pointsthing">9c7718cddb229150791d8f8d13961979</sys_package>
@@ -61,7 +62,7 @@
         <sys_scope display_value="Points Thing">9c7718cddb229150791d8f8d13961979</sys_scope>
         <sys_update_name>sys_script_b91e6805dba29150791d8f8d13961933</sys_update_name>
         <sys_updated_by>earl.duque</sys_updated_by>
-        <sys_updated_on>2022-10-14 04:42:45</sys_updated_on>
+        <sys_updated_on>2022-10-19 04:01:51</sys_updated_on>
         <template/>
         <when>async_always</when>
     </sys_script>
