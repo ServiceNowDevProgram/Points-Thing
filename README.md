@@ -2,6 +2,20 @@
 
 This bot is what controls the @Points-Thing bot on the sndevs.com slack workspace.
 
+## What is Points-Thing?
+
+On the SNDevs Slack server, we like to give kudos to each other! Especially when someone has been particularly helpful (answered a ServiceNow question, helped review a code snippet, or simply pointed to the right documentation) or even when someone provided a much needed laugh (a funny joke, a well-timed meme, or simple relatable musings).
+
+To give those kudos, we made the Points-Thing bot! Simply @ mention someone and put ++ right after to give them a point.
+
+`@AbelTuter ++`
+
+And the bot keeps track (via a ServiceNow instance) of how helpful that person has been. Now user can quickly see who in the community has been a great contributor. And contributors have a way to show credibility in their responses.
+
+The bot evolved from there and functionality has been added onto it ever since it was created in 2017.
+
+
+
 🔔🔔🔔<br>
 ***CONTRIBUTORS must follow all guidelines in [CONTRIBUTING.md](CONTRIBUTING.md)*** or run the risk of having your Pull Requests labeled as spam.<br>
 🔔🔔🔔
