@@ -213,17 +213,22 @@ PointsThing.prototype = {
 			count.query();
 			var rank = 1;
 			var not_displayed = 0;
-			while (count.next()){
+			var complete = false;
+			while (count.next() && !complete){
 				var item = '';
+				var points = count.target.points;
 				var user_name = count.target.user_name.toString();
 
-				if (rank == 1) item = ':first_place_medal: ' + user_name + ' (' + count.getAggregate('COUNT', 'target') + ' points)';
-				else if (rank == 2) item = ':second_place_medal: ' + user_name + ' (' + count.getAggregate('COUNT', 'target') + ')';
-				else if (rank == 3) item = ':third_place_medal: ' + user_name + ' (' + count.getAggregate('COUNT', 'target') + ')';
-				else if (rank > 3 && rank < top_5_percent) item = ':star2: ' + user_name + ' (' + count.getAggregate('COUNT', 'target') + ')';
-				else if (all & rank > 3 && rank < top_10_percent) item = ':star: ' + user_name + ' (' + count.getAggregate('COUNT', 'target') + ')';
-				else if (all & rank > 3 && rank < top_25_percent) item = ':sparkles: ' + user_name + ' (' + count.getAggregate('COUNT', 'target') + ')';
-				else if (chat_gr && chat_gr.user && count.target.user_id.includes(chat_gr.user.user_id)) item = '...' + user_name + ' - (' + count.getAggregate('COUNT', 'target') + ' points, ~' + (Math.round(((total_users-rank)/total_users*100) / 10) * 10) + 'th percentile)';
+				if (rank == 1) item = ':first_place_medal: ' + user_name + ' (' + points + ' points)';
+				else if (rank == 2) item = ':second_place_medal: ' + user_name + ' (' + points + ')';
+				else if (rank == 3) item = ':third_place_medal: ' + user_name + ' (' + points + ')';
+				else if (rank > 3 && rank < top_5_percent) item = ':star2: ' + user_name + ' (' + points + ')';
+				else if (all & rank > 3 && rank < top_10_percent) item = ':star: ' + user_name + ' (' + points + ')';
+				else if (all & rank > 3 && rank < top_25_percent) item = ':sparkles: ' + user_name + ' (' + points + ')';
+				else if (chat_gr && chat_gr.user && count.target.user_id.includes(chat_gr.user.user_id)) {
+					item = '...' + user_name + ' - (' + points + ' points, ~' + (Math.round(((total_users-rank)/total_users*100) / 10) * 10) + 'th percentile)';
+					complete = true;
+				}
 				else {
 					rank++;
 					not_displayed++;
@@ -300,13 +305,13 @@ PointsThing.prototype = {
         <sys_created_by>earl.duque</sys_created_by>
         <sys_created_on>2022-10-13 03:22:36</sys_created_on>
         <sys_id>88dd9085db629150791d8f8d13961998</sys_id>
-        <sys_mod_count>96</sys_mod_count>
+        <sys_mod_count>99</sys_mod_count>
         <sys_name>PointsThing</sys_name>
         <sys_package display_value="Points Thing" source="x_snc_pointsthing">9c7718cddb229150791d8f8d13961979</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Points Thing">9c7718cddb229150791d8f8d13961979</sys_scope>
         <sys_update_name>sys_script_include_88dd9085db629150791d8f8d13961998</sys_update_name>
         <sys_updated_by>earl.duque</sys_updated_by>
-        <sys_updated_on>2022-10-19 23:16:37</sys_updated_on>
+        <sys_updated_on>2022-10-19 23:28:43</sys_updated_on>
     </sys_script_include>
 </record_update>
