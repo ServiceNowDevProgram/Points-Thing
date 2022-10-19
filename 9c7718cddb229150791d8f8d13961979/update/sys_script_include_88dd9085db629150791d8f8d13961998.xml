@@ -55,7 +55,7 @@ PointsThing.prototype = {
 		}
 		if (typeof message == 'object' && message.blocks) {
 			bodyString += '&text=' + gs.urlEncode(message.text);
-			bodyString += '&blocks=' + gs.urlEncode(message.blocks);
+			bodyString += '&blocks=' + gs.urlEncode(JSON.stringify(message.blocks));
 		} else {
 			bodyString += '&text=' + gs.urlEncode(message);
 		}
@@ -243,19 +243,60 @@ PointsThing.prototype = {
 		else return items;
 	},
 
+    points_party: function(chat_gr, send){
+        var message = '';
+        var thread_ts = chat_gr.getValue('thread_ts');
+        var user_id = chat_gr.user.getRefRecord().getValue('user_id');
+        var user_sysid = chat_gr.getValue('user');
+        var recipients = [];
+        
+        if(!thread_ts){
+            message = 'You cannot throw a points party in public. Get a thread!';
+            this.send_chat(chat_gr, message, false);
+            return null;
+        }
+
+        var grChat = new GlideRecord('x_snc_pointsthing_chat');
+        grChat.addQuery('thread_ts', thread_ts);
+        grChat.addQuery('user', '!=', user_sysid);
+        grChat.query();
+        
+        while(grChat.next()){
+            recipients.push(grChat.user.getRefRecord().getValue('user_id'));
+        }
+        
+        recipients = recipients.filter(function(recipient, idx, arr){
+            return arr.indexOf(recipient) == idx;
+        } );
+        
+        message = ['<@' + user_id + '> is throwing a points party for :\n'];
+        
+        recipients.forEach( function(recipient){
+            message.push('<@' + recipient + '> ++ \n');
+			
+			// Create points
+			var point = new GlideRecord("x_snc_pointsthing_point");
+			point.newRecord();
+			point.setValue('giver', chat_gr.user);
+			point.setValue('target', new x_snc_pointsthing.PointsThing().establish_user(recipient, true));
+			point.setValue('chat', chat_gr.getUniqueValue());
+			point.insert();
+        } );
+        
+        this.send_chat(chat_gr, message.join(''), false);
+		this.broadcast_points(recipients, chat_gr);
+    },
+
 	type: 'PointsThing'
 };]]></script>
         <sys_class_name>sys_script_include</sys_class_name>
         <sys_created_by>earl.duque</sys_created_by>
         <sys_created_on>2022-10-13 03:22:36</sys_created_on>
         <sys_id>88dd9085db629150791d8f8d13961998</sys_id>
-        <sys_mod_count>87</sys_mod_count>
         <sys_name>PointsThing</sys_name>
         <sys_package display_value="Points Thing" source="x_snc_pointsthing">9c7718cddb229150791d8f8d13961979</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Points Thing">9c7718cddb229150791d8f8d13961979</sys_scope>
         <sys_update_name>sys_script_include_88dd9085db629150791d8f8d13961998</sys_update_name>
-        <sys_updated_by>earl.duque</sys_updated_by>
-        <sys_updated_on>2022-10-19 05:36:05</sys_updated_on>
     </sys_script_include>
 </record_update>
