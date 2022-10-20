@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller=function() {
+  /* widget controller */
+  var c = this;
+};]]></client_script>
+        <controller_as>c</controller_as>
+        <css>@import url('https://fonts.googleapis.com/css2?family=Pacifico&amp;display=swap');
+
+body {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Pacifico', cursive;
+  font-size: 20vmin;
+  background: #EDDDD4;
+}
+.gradient {
+  background-image: linear-gradient(90deg, rgba(94,114,235,1) 0%, rgba(255,145,144,1) 56%, rgba(254,193,149,1) 100%);
+  color: transparent;
+  -webkit-background-clip: text;
+  
+  animation: move 1s infinite;
+  font-family: "Pacifico", "Gilroy", "Century Gothic"
+}
+
+@keyframes move {
+  50% {
+    background-image: linear-gradient(262deg, rgba(94,114,235,1) 0%, rgba(255,145,144,1) 56%, rgba(254,193,149,1) 100%);
+  }
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>leaderboard</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {  }]]></link>
+        <name>leaderboard</name>
+        <option_schema/>
+        <public>true</public>
+        <roles/>
+        <script><![CDATA[(function() {
+  /* populate the 'data' object */
+  /* e.g., data.table = $sp.getValue('table'); */
+	data.leaderboard = new x_snc_pointsthing.PointsThing().leaderboard(null, false, true);
+	
+	var leaderboard_all = new GlideRecord('x_snc_pointsthing_user');
+	leaderboard_all.addEncodedQuery('points!=0^points>5');
+	leaderboard_all.orderByDesc('points');
+	leaderboard_all.query();
+	data.leaderboard_all = ["Points leaderboard (users with more than 5 points all time):"];
+	var rank = 1;
+	while(leaderboard_all.next()){
+		data.leaderboard_all.push(rank + '. ' + leaderboard_all.getValue('user_name') + ' (' + leaderboard_all.getValue('points') + ')');
+		rank++;
+	}
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>earl.duque</sys_created_by>
+        <sys_created_on>2022-10-20 20:27:41</sys_created_on>
+        <sys_id>4a3d006b47ee5510248ddf37436d43ad</sys_id>
+        <sys_mod_count>19</sys_mod_count>
+        <sys_name>leaderboard</sys_name>
+        <sys_package display_value="Points Thing" source="x_snc_pointsthing">9c7718cddb229150791d8f8d13961979</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Points Thing">9c7718cddb229150791d8f8d13961979</sys_scope>
+        <sys_update_name>sp_widget_4a3d006b47ee5510248ddf37436d43ad</sys_update_name>
+        <sys_updated_by>earl.duque</sys_updated_by>
+        <sys_updated_on>2022-10-20 20:49:42</sys_updated_on>
+        <template><![CDATA[<h1>
+  SNDevs <span class="gradient">Points Thing</span> Leaderboard
+</h1>
+<div class="row">
+  <div class="col-sm-6 col-xs-12">
+    <div ng-repeat="item in data.leaderboard">
+      {{item}}
+    </div>
+  </div>
+  <div class="col-sm-6 col-xs-12">
+    <div ng-repeat="item in data.leaderboard_all">
+      {{item}}
+    </div>
+  </div>
+</div>]]></template>
+    </sp_widget>
+</record_update>
