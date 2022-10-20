@@ -216,7 +216,7 @@ PointsThing.prototype = {
 			var complete = false;
 			while (count.next() && !complete){
 				var item = '';
-				var points = count.target.points;
+				var points = count.getAggregate('COUNT', 'target');
 				var user_name = count.target.user_name.toString();
 
 				if (rank == 1) item = ':first_place_medal: ' + user_name + ' (' + points + ' points)';
@@ -299,10 +299,13 @@ PointsThing.prototype = {
         <sys_created_by>earl.duque</sys_created_by>
         <sys_created_on>2022-10-13 03:22:36</sys_created_on>
         <sys_id>88dd9085db629150791d8f8d13961998</sys_id>
+        <sys_mod_count>101</sys_mod_count>
         <sys_name>PointsThing</sys_name>
         <sys_package display_value="Points Thing" source="x_snc_pointsthing">9c7718cddb229150791d8f8d13961979</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Points Thing">9c7718cddb229150791d8f8d13961979</sys_scope>
         <sys_update_name>sys_script_include_88dd9085db629150791d8f8d13961998</sys_update_name>
+        <sys_updated_by>earl.duque</sys_updated_by>
+        <sys_updated_on>2022-10-20 18:48:58</sys_updated_on>
     </sys_script_include>
 </record_update>
