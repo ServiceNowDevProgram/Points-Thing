@@ -76,7 +76,7 @@ PointsThing.prototype = {
         // Replace names with tags
         var message = responseObj.message.text;
         for (var user in users) {
-            var expr = new RegExp('\\b' + users[user].name + '\\b', "gmi");
+            var expr = new RegExp('\\b' + users[user].name + '\\b(?= \\(| - \\()', "gmi");
             message = message.replace(expr, '<@' + users[user].id + '>');
         }
         var bodyString = '';
