@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties">
+    <sys_properties action="INSERT_OR_UPDATE">
+        <choices/>
+        <description>Boolean controlling whether leaderboard messages will be edited to update to tags (allowing dynamic reference without spamming notifications on mention)</description>
+        <ignore_cache>true</ignore_cache>
+        <is_private>false</is_private>
+        <name>x_snc_pointsthing.leaderboard_tagging</name>
+        <read_roles/>
+        <suffix>leaderboard_tagging</suffix>
+        <sys_class_name>sys_properties</sys_class_name>
+        <sys_created_by>SapphicFire</sys_created_by>
+        <sys_created_on>2022-10-28 15:48:44</sys_created_on>
+        <sys_id>d5d998ce97ba115060bf732e6253afad</sys_id>
+        <sys_name>x_snc_pointsthing.leaderboard_tagging</sys_name>
+        <sys_package display_value="Points Thing" source="x_snc_pointsthing">9c7718cddb229150791d8f8d13961979</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Points Thing">9c7718cddb229150791d8f8d13961979</sys_scope>
+        <sys_update_name>sys_properties_d5d998ce97ba115060bf732e6253afad</sys_update_name>
+        <type>boolean</type>
+        <value>false</value>
+        <write_roles/>
+    </sys_properties>
+    <sys_translated_text action="delete_multiple" query="documentkey=d5d998ce97ba115060bf732e6253afad"/>
+</record_update>
