@@ -11,6 +11,8 @@
 PointsThing.prototype = {
     initialize: function() {
         this.token = gs.getProperty("pointsthing.token");
+		this.emojiSet = JSON.parse(new EmojiSet().get());
+		
     },
 
     establish_user: function(payload_user, increment_point, set_points) {
@@ -201,12 +203,12 @@ PointsThing.prototype = {
         while (count.next()) {
             if (count.target.user_id.includes(id)) {
                 var emoji = '';
-                if (rank == 1) emoji = ':first_place_medal:';
-                else if (rank == 2) emoji = ':second_place_medal:';
-                else if (rank == 3) emoji = ':third_place_medal:';
-                else if (rank < Math.ceil(total_users * .05)) emoji = ':star2:';
-                else if (rank < Math.ceil(total_users * .1)) emoji = ':star:';
-                else if (rank < Math.ceil(total_users * .25)) emoji = ':sparkles:';
+                if (rank == 1) emoji = this.emojiSet.rank1;
+                else if (rank == 2) emoji = this.emojiSet.rank2;
+                else if (rank == 3) emoji = this.emojiSet.rank3;
+                else if (rank < Math.ceil(total_users * .05)) emoji = this.emojiSet.top5;
+                else if (rank < Math.ceil(total_users * .1)) emoji = this.emojiSet.top10;
+                else if (rank < Math.ceil(total_users * .25)) emoji = this.emojiSet.top25;
                 return {
                     'id': id,
                     'points': count.getAggregate('COUNT', 'target'),
@@ -259,12 +261,12 @@ PointsThing.prototype = {
                     });
                 }
 
-                if (rank == 1) item = ':first_place_medal: ' + user_name + ' (' + points + ' points)';
-                else if (rank == 2) item = ':second_place_medal: ' + user_name + ' (' + points + ')';
-                else if (rank == 3) item = ':third_place_medal: ' + user_name + ' (' + points + ')';
-                else if (rank > 3 && rank < top_5_percent) item = ':star2: ' + user_name + ' (' + points + ')';
-                else if (all & rank > 3 && rank < top_10_percent) item = '⭐ ' + user_name + ' (' + points + ')';
-                else if (all & rank > 3 && rank < top_25_percent) item = '✨ ' + user_name + ' (' + points + ')';
+                if (rank == 1) item = this.emojiSet.rank1 + ' ' + user_name + ' (' + points + ' points)';
+                else if (rank == 2) item = this.emojiSet.rank2 + ' ' + user_name + ' (' + points + ')';
+                else if (rank == 3) item = this.emojiSet.rank3 + ' ' + user_name + ' (' + points + ')';
+                else if (rank > 3 && rank < top_5_percent) item = this.emojiSet.top5 +' ' + user_name + ' (' + points + ')';
+                else if (all & rank > 3 && rank < top_10_percent) item = this.emojiSet.top10 + ' ' + user_name + ' (' + points + ')';
+                else if (all & rank > 3 && rank < top_25_percent) item = this.emojiSet.top25 + ' ' + user_name + ' (' + points + ')';
                 else if (chat_gr && chat_gr.user && count.target.user_id.includes(chat_gr.user.user_id)) {
                     item = '...' + user_name + ' - (' + points + ' points, ~' + (Math.round(((total_users - rank) / total_users * 100) / 10) * 10) + 'th percentile)';
                     complete = true;

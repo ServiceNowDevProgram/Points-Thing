@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <active>true</active>
+        <api_name>x_snc_pointsthing.EmojiSet</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <name>EmojiSet</name>
+        <script><![CDATA[var EmojiSet = Class.create();
+EmojiSet.prototype = {
+    initialize: function() {},
+
+    get: function() {
+        var emojiSet = {};
+        var prop = gs.getProperty("x_snc_pointsthing.emoji", "STANDARD");
+        
+		switch (prop) {
+            case 'PARROTS':
+                emojiSet = {
+                    rank1: ':thumbsupparrot:',
+                    rank2: ':fastparrot:',
+                    rank3: ':congapartyparrot:',
+                    top5: ':sassyparrot:',
+                    top10: ':slo-mo-parrot:',
+                    top25: ':boredparrot:'
+                };
+                break;
+            case 'HYPE':
+                emojiSet = {
+                    rank1: ':hypee:',
+                    rank2: ':ultrafastparrot:',
+                    rank3: ':mild-panic-intensifies:',
+                    top5: ':eyesshook:',
+                    top10: ':whee:',
+                    top25: ':panic:'
+                };
+                break;
+            default: //AKA the Standard Set
+                emojiSet = {
+                    rank1: ':first_place_medal:',
+                    rank2: ':second_place_medal:',
+                    rank3: ':third_place_medal:',
+                    top5: ':star2:',
+                    top10: ':star:',
+                    top25: ':sparkles:'
+                };
+        }
+		
+        var emoji = JSON.stringify(emojiSet);
+		return emoji;
+
+    },
+    type: 'EmojiSet'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>eriemer</sys_created_by>
+        <sys_created_on>2022-12-29 21:37:49</sys_created_on>
+        <sys_id>283bf4461b0ca150b7c3dc6cdc4bcb96</sys_id>
+        <sys_name>EmojiSet</sys_name>
+        <sys_package display_value="Points Thing" source="x_snc_pointsthing">9c7718cddb229150791d8f8d13961979</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="Points Thing">9c7718cddb229150791d8f8d13961979</sys_scope>
+        <sys_update_name>sys_script_include_283bf4461b0ca150b7c3dc6cdc4bcb96</sys_update_name>
+    </sys_script_include>
+</record_update>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties">
+    <sys_properties action="INSERT_OR_UPDATE">
+        <choices/>
+        <description>Used by the x_snc_pointsthing.EmojiSet Script Include to determine which sets of Emoji to use.&#13;
+Try setting this property to PARROTS or HYPE as examples.&#13;
+If this property is missing or the value doesnt find a match in the Script Include it will default to the Standard set.</description>
+        <ignore_cache>true</ignore_cache>
+        <is_private>false</is_private>
+        <name>x_snc_pointsthing.emoji</name>
+        <read_roles/>
+        <suffix>emoji</suffix>
+        <sys_class_name>sys_properties</sys_class_name>
+        <sys_created_by>eriemer</sys_created_by>
+        <sys_created_on>2022-12-29 23:01:07</sys_created_on>
+        <sys_id>6b7f4d0a1b4ca150b7c3dc6cdc4bcb44</sys_id>
+        <sys_name>x_snc_pointsthing.emoji</sys_name>
+        <sys_package display_value="Points Thing" source="x_snc_pointsthing">9c7718cddb229150791d8f8d13961979</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Points Thing">9c7718cddb229150791d8f8d13961979</sys_scope>
+        <sys_update_name>sys_properties_6b7f4d0a1b4ca150b7c3dc6cdc4bcb44</sys_update_name>
+        <type>string</type>
+        <value>STANDARD</value>
+        <write_roles/>
+    </sys_properties>
+    <sys_translated_text action="delete_multiple" query="documentkey=6b7f4d0a1b4ca150b7c3dc6cdc4bcb44"/>
+</record_update>
