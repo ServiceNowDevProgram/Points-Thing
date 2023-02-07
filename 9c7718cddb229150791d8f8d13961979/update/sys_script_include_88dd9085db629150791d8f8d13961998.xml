@@ -291,7 +291,7 @@ PointsThing.prototype = {
 
         if (send) {
             items.push('');
-            items.push('https://' + gs.getProperty('instance_name') + '.service-now.com/sndevs?id=leaderboard');
+            items.push('https://' + gs.getProperty('instance_name') + '.service-now.com/dpp?id=leaderboard');
             if (lb_tagging) {
                 var handleTags = this.send_chat(chat_gr, items.join('\n'), true);
                 this.update_tag_chat(handleTags, userArr);
