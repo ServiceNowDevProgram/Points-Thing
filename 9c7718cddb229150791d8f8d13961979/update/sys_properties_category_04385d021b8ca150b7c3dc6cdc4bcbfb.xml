@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties_category">
+    <sys_properties_category action="INSERT_OR_UPDATE">
+        <name>Points Thing</name>
+        <sys_class_name>sys_properties_category</sys_class_name>
+        <sys_created_by>eriemer</sys_created_by>
+        <sys_created_on>2022-12-29 23:39:04</sys_created_on>
+        <sys_id>04385d021b8ca150b7c3dc6cdc4bcbfb</sys_id>
+        <sys_name>Points Thing</sys_name>
+        <sys_package display_value="Points Thing" source="x_snc_pointsthing">9c7718cddb229150791d8f8d13961979</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Points Thing">9c7718cddb229150791d8f8d13961979</sys_scope>
+        <sys_update_name>sys_properties_category_04385d021b8ca150b7c3dc6cdc4bcbfb</sys_update_name>
+        <title><![CDATA[<p>Because internet points are the best points</p>
+<p> </p>]]></title>
+    </sys_properties_category>
+    <sys_translated_text action="delete_multiple" query="documentkey=04385d021b8ca150b7c3dc6cdc4bcbfb"/>
+</record_update>
