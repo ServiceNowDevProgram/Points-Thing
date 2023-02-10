@@ -29,7 +29,7 @@
         <role_conditions/>
         <script><![CDATA[(function executeRule(current, previous /*null when async*/) {
 
-	var matches = current.text.match(/(?:<@)(.*?)(?=>\s*\+){2}/gm);
+	var matches = current.text.match(/(?:<@)(.*?)(?=>(?:\s*\+){2})/gm);
 	for (var i in matches){
 		var n = matches[i].lastIndexOf('@');
 		matches[i] = matches[i].substring(n + 1);
@@ -54,7 +54,7 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>b91e6805dba29150791d8f8d13961933</sys_id>
-        <sys_mod_count>14</sys_mod_count>
+        <sys_mod_count>15</sys_mod_count>
         <sys_name>Create point</sys_name>
         <sys_overrides/>
         <sys_package display_value="Points Thing" source="x_snc_pointsthing">9c7718cddb229150791d8f8d13961979</sys_package>
@@ -62,7 +62,7 @@
         <sys_scope display_value="Points Thing">9c7718cddb229150791d8f8d13961979</sys_scope>
         <sys_update_name>sys_script_b91e6805dba29150791d8f8d13961933</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2023-02-08 19:10:04</sys_updated_on>
+        <sys_updated_on>2023-02-10 17:18:52</sys_updated_on>
         <template/>
         <when>async_always</when>
     </sys_script>
