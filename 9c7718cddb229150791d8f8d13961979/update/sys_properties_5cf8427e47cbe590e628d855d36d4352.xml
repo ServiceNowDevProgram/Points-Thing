@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties">
+    <sys_properties action="INSERT_OR_UPDATE">
+        <choices>real_name,display_name</choices>
+        <description>Set if Display Name or Real Name is used</description>
+        <ignore_cache>true</ignore_cache>
+        <is_private>false</is_private>
+        <name>x_snc_pointsthing.leaderboard_name</name>
+        <read_roles/>
+        <suffix>leaderboard_name</suffix>
+        <sys_class_name>sys_properties</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-05-30 14:18:04</sys_created_on>
+        <sys_id>5cf8427e47cbe590e628d855d36d4352</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>x_snc_pointsthing.leaderboard_name</sys_name>
+        <sys_package display_value="Points Thing" source="x_snc_pointsthing">9c7718cddb229150791d8f8d13961979</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Points Thing">9c7718cddb229150791d8f8d13961979</sys_scope>
+        <sys_update_name>sys_properties_5cf8427e47cbe590e628d855d36d4352</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2023-05-30 14:47:08</sys_updated_on>
+        <type>choicelist</type>
+        <value>display_name</value>
+        <write_roles/>
+    </sys_properties>
+    <sys_translated_text action="delete_multiple" query="documentkey=5cf8427e47cbe590e628d855d36d4352"/>
+</record_update>

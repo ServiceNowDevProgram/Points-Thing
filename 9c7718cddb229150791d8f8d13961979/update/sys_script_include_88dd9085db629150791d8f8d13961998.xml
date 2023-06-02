@@ -11,8 +11,8 @@
 PointsThing.prototype = {
     initialize: function() {
         this.token = gs.getProperty("pointsthing.token");
-		this.emojiSet = JSON.parse(new EmojiSet().get());
-		
+        this.emojiSet = JSON.parse(new EmojiSet().get());
+
     },
 
     establish_user: function(payload_user, increment_point, set_points) {
@@ -25,6 +25,11 @@ PointsThing.prototype = {
             user.setValue('user_id', payload_user);
             userSysID = user.insert();
         }
+
+        if (!user.getValue('user_name') || user.getValue('name_updated') < gs.daysAgoStart(0)) {
+            this.get_user_info(payload_user, userSysID); //Update user info once per day, in case of name change.
+        }
+
         if (increment_point) {
             var score = parseInt(user.getValue('points'));
             score++;
@@ -34,9 +39,8 @@ PointsThing.prototype = {
             if (user.getValue('points') != set_points) user.setValue('points', set_points);
             user.update();
         }
-        if (!user.getValue('user_name')) {
-            this.get_user_info(payload_user, userSysID);
-        }
+
+
         return userSysID;
     },
 
@@ -106,7 +110,9 @@ PointsThing.prototype = {
         if (response_body.user.name) {
             var grupdate = new GlideRecord('x_snc_pointsthing_user');
             grupdate.get(record_id);
-            grupdate.setValue('user_name', response_body.user.real_name);
+            var name = response_body.user.profile[gs.getProperty('x_snc_pointsthing.leaderboard_name')] ? response_body.user.profile[gs.getProperty('x_snc_pointsthing.leaderboard_name')] : response_body.user.profile['real_name']
+            grupdate.setValue('user_name', name);
+            grupdate.setValue('name_updated', new GlideDateTime());
             grupdate.update();
             return true;
         } else {
@@ -264,7 +270,7 @@ PointsThing.prototype = {
                 if (rank == 1) item = this.emojiSet.rank1 + ' ' + user_name + ' (' + points + ' points)';
                 else if (rank == 2) item = this.emojiSet.rank2 + ' ' + user_name + ' (' + points + ')';
                 else if (rank == 3) item = this.emojiSet.rank3 + ' ' + user_name + ' (' + points + ')';
-                else if (rank > 3 && rank < top_5_percent) item = this.emojiSet.top5 +' ' + user_name + ' (' + points + ')';
+                else if (rank > 3 && rank < top_5_percent) item = this.emojiSet.top5 + ' ' + user_name + ' (' + points + ')';
                 else if (all & rank > 3 && rank < top_10_percent) item = this.emojiSet.top10 + ' ' + user_name + ' (' + points + ')';
                 else if (all & rank > 3 && rank < top_25_percent) item = this.emojiSet.top25 + ' ' + user_name + ' (' + points + ')';
                 else if (chat_gr && chat_gr.user && count.target.user_id.includes(chat_gr.user.user_id)) {
@@ -291,7 +297,7 @@ PointsThing.prototype = {
 
         if (send) {
             items.push('');
-            items.push('https://' + gs.getProperty('instance_name') + '.service-now.com/'+gs.getProperty('x_snc_pointsthing.portal','sp')+'?id=leaderboard');
+            items.push('https://' + gs.getProperty('instance_name') + '.service-now.com/' + gs.getProperty('x_snc_pointsthing.portal', 'sp') + '?id=leaderboard');
             if (lb_tagging) {
                 var handleTags = this.send_chat(chat_gr, items.join('\n'), true);
                 this.update_tag_chat(handleTags, userArr);
@@ -345,13 +351,13 @@ PointsThing.prototype = {
         <sys_created_by>earl.duque</sys_created_by>
         <sys_created_on>2022-10-13 03:22:36</sys_created_on>
         <sys_id>88dd9085db629150791d8f8d13961998</sys_id>
-        <sys_mod_count>2</sys_mod_count>
+        <sys_mod_count>12</sys_mod_count>
         <sys_name>PointsThing</sys_name>
         <sys_package display_value="Points Thing" source="x_snc_pointsthing">9c7718cddb229150791d8f8d13961979</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Points Thing">9c7718cddb229150791d8f8d13961979</sys_scope>
         <sys_update_name>sys_script_include_88dd9085db629150791d8f8d13961998</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2023-03-02 03:37:10</sys_updated_on>
+        <sys_updated_on>2023-05-30 16:01:21</sys_updated_on>
     </sys_script_include>
 </record_update>
