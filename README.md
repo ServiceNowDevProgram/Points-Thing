@@ -1,10 +1,10 @@
-# Points-Thing
+![PointsThing Banner](https://github.com/ServiceNowDevProgram/Points-Thing/assets/31702109/6218d037-81ee-4c5d-aa26-c745a7297cf4)
 
-This bot is what controls the @Points-Thing bot on the sndevs.com slack workspace.
+This bot is what controls the @Points-Thing bot on the sndevs.com workspace.
 
 ## What is Points-Thing?
 
-On the SNDevs Slack server, we like to give kudos to each other! Especially when someone has been particularly helpful (answered a ServiceNow question, helped review a code snippet, or simply pointed to the right documentation) or even when someone provided a much needed laugh (a funny joke, a well-timed meme, or simple relatable musings).
+On the SNDevs workspace, we like to give kudos to each other! Especially when someone has been particularly helpful (answered a ServiceNow question, helped review a code snippet, or simply pointed to the right documentation) or even when someone provided a much needed laugh (a funny joke, a well-timed meme, or simple relatable musings).
 
 To give those kudos, we made the Points-Thing bot! Simply @ mention someone and put ++ right after to give them a point.
 
@@ -27,7 +27,7 @@ The bot evolved from there and functionality has been added onto it ever since i
 3. Go to `System Applications` => `Studio`
 4. Once Studio loads, select `Import From Source Control`
 5. Use your forked repo to [Import your application](https://developer.servicenow.com/dev.do#!/learn/learning-plans/tokyo/new_to_servicenow/app_store_learnv2_devenvironment_tokyo_importing_an_application_from_source_control)
-6. See below on how to get this bot working on your own slack server
+6. See below on how to get this bot working on your own server
 7. Make updates to the application (see [CONTRIBUTING.md](CONTRIBUTING.md) for additional details)
 8. In Studio, commit your changes to source control
 9. Submit a pull request to the ServiceNowDevProgram/Points-Thing `main` branch
@@ -36,12 +36,12 @@ An accepted Pull Request and merge does not necessarily mean the functionality w
 
 ## Installing this bot on your own Slack server
 
-### Create Slack App, Install into Slack
+### Create App, Install into your workspace
 
 #### Via a Manifest
 
 * Create a new app, select "From an app manifest"
-* Select the Slack Workspace into which you want to install this app
+* Select the workspace into which you want to install this app
 * Copy and paste the manifest from either [appmanifest.json](Points-Thing/appmanifest.json) or [appmanifest.yaml](Points-Thing/appmanifest.yaml)
 * Create the app
 * Navigate to `Features` > `Event Subscriptions`
@@ -56,7 +56,7 @@ An accepted Pull Request and merge does not necessarily mean the functionality w
 #### Manually
 
 * Create a new app, select "From scratch"
-* Select the Slack Workspace into which you want to install this app
+* Select the workspace into which you want to install this app
 * Navigate to `Features` > `Event Subscriptions`
 * Turn on `Enable Events`
 * Populate the `Request URL` with: https://YOURDEVINSTANCE.service-now.com/api/x_snc_pointsthing/points_thing
@@ -82,10 +82,10 @@ An accepted Pull Request and merge does not necessarily mean the functionality w
 
 ### Testing
 
-* Invite your bot to a Slack channel
+* Invite your bot to a channel
 * @ mention someone in your server with a ++, eg. `@Earl Duque ++`
 
 ### Troubleshooting
 
-* Check the Payload `x_snc_pointsthing_payload` table to make sure SN is receiving Slack messages
+* Check the Payload `x_snc_pointsthing_payload` table to make sure SN is receiving messages
 * Check 'Outbound HTTP Requests' to make sure the bot is replying to the channel
