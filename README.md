@@ -1,7 +1,7 @@
 ![PointsThing Banner](https://github.com/ServiceNowDevProgram/Points-Thing/assets/31702109/6218d037-81ee-4c5d-aa26-c745a7297cf4)
 
 This bot is what controls the @Points-Thing bot on the sndevs.com workspace.
-
+test
 ## What is Points-Thing?
 
 On the SNDevs workspace, we like to give kudos to each other! Especially when someone has been particularly helpful (answered a ServiceNow question, helped review a code snippet, or simply pointed to the right documentation) or even when someone provided a much needed laugh (a funny joke, a well-timed meme, or simple relatable musings).
