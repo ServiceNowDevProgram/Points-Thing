@@ -42,7 +42,7 @@ An accepted Pull Request and merge does not necessarily mean the functionality w
 
 * Create a new app, select "From an app manifest"
 * Select the workspace into which you want to install this app
-* Copy and paste the manifest from either [appmanifest.json](Points-Thing/appmanifest.json) or [appmanifest.yaml](Points-Thing/appmanifest.yaml)
+* Copy and paste the manifest from either [appmanifest.json](https://github.com/ServiceNowDevProgram/Points-Thing/blob/18dcc148d7564eca0048a0fc1aef63f2a69cce24/Slack%20App%20Manifest/appmanifest.json) or [appmanifest.yaml](https://github.com/ServiceNowDevProgram/Points-Thing/blob/18dcc148d7564eca0048a0fc1aef63f2a69cce24/Slack%20App%20Manifest/appmanifest.yaml)
 * Create the app
 * Navigate to `Features` > `Event Subscriptions`
 * Populate the `Request URL` with: https://YOURDEVINSTANCE.service-now.com/api/x_snc_pointsthing/points_thing
