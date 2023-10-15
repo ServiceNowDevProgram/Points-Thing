@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="topic">
+    <topic action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <apply_to_child_topics>false</apply_to_child_topics>
+        <banner_image/>
+        <banner_image_url/>
+        <description/>
+        <icon/>
+        <icon_url/>
+        <name>What is Points-Thing?</name>
+        <order>50</order>
+        <parent_topic/>
+        <sys_class_name>topic</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-10-10 06:31:32</sys_created_on>
+        <sys_id>7ce9d5e947fdb11038069995536d4336</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>What is Points-Thing?</sys_name>
+        <sys_package display_value="Points Thing" source="x_snc_pointsthing">9c7718cddb229150791d8f8d13961979</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Points Thing">9c7718cddb229150791d8f8d13961979</sys_scope>
+        <sys_update_name>topic_7ce9d5e947fdb11038069995536d4336</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2023-10-10 06:31:43</sys_updated_on>
+        <taxonomy display_value="PointsThing">bab9d1e947fdb11038069995536d4365</taxonomy>
+        <template display_value="emp_taxonomy_topic">4fb26c9cc3d030102ec1a589a840ddbd</template>
+        <topic_based_navigation>false</topic_based_navigation>
+        <topic_contributor/>
+        <topic_manager/>
+        <topic_path>What is Points-Thing?</topic_path>
+    </topic>
+    <sys_translated_text action="delete_multiple" query="documentkey=7ce9d5e947fdb11038069995536d4336"/>
+</record_update>

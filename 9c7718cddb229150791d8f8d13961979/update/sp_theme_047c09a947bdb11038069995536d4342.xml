@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_theme">
+    <sp_theme action="INSERT_OR_UPDATE">
+        <css_variables>@import url('https://fonts.googleapis.com/css2?family=Pacifico&amp;display=swap');&#13;
+&#13;
+body {&#13;
+  height: 100vh;&#13;
+  width: 100vw;&#13;
+  display: flex;&#13;
+  justify-content: center;&#13;
+  align-items: center;&#13;
+  font-family: 'Pacifico', cursive;&#13;
+  font-size: 24;&#13;
+  background: #EDDDD4;&#13;
+}&#13;
+.gradient {&#13;
+  background-image: linear-gradient(90deg, rgba(94,114,235,1) 0%, rgba(255,145,144,1) 56%, rgba(254,193,149,1) 100%);&#13;
+  color: transparent;&#13;
+  -webkit-background-clip: text;&#13;
+  &#13;
+  animation: move 1s infinite;&#13;
+  font-family: "Pacifico", "Gilroy", "Century Gothic"&#13;
+}&#13;
+&#13;
+@keyframes move {&#13;
+  50% {&#13;
+    background-image: linear-gradient(262deg, rgba(94,114,235,1) 0%, rgba(255,145,144,1) 56%, rgba(254,193,149,1) 100%);&#13;
+  }&#13;
+}</css_variables>
+        <footer/>
+        <footer_fixed>false</footer_fixed>
+        <header/>
+        <name>PointsThing</name>
+        <navbar_fixed>true</navbar_fixed>
+        <sys_class_name>sp_theme</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-10-10 05:31:24</sys_created_on>
+        <sys_id>047c09a947bdb11038069995536d4342</sys_id>
+        <sys_mod_count>5</sys_mod_count>
+        <sys_name>PointsThing</sys_name>
+        <sys_package display_value="Points Thing" source="x_snc_pointsthing">9c7718cddb229150791d8f8d13961979</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Points Thing">9c7718cddb229150791d8f8d13961979</sys_scope>
+        <sys_update_name>sp_theme_047c09a947bdb11038069995536d4342</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2023-10-10 06:28:25</sys_updated_on>
+        <turn_off_scss_compilation>false</turn_off_scss_compilation>
+    </sp_theme>
+</record_update>
