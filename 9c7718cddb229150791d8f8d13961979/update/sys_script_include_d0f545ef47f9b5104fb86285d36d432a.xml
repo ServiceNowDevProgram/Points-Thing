@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <active>true</active>
+        <api_name>x_snc_pointsthing.PointsThingAPI</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description>Extension of the PointsThing include to support API-specific invocations</description>
+        <name>PointsThingAPI</name>
+        <script><![CDATA[var PointsThingAPI = Class.create();
+PointsThingAPI.prototype = Object.extendsObject(x_snc_pointsthing.PointsThing,{
+    initialize: function() {
+		x_snc_pointsthing.PointsThing.prototype.initialize.call(this);
+    },
+
+	// Support name and ID, and don't do the name establish as any slack-facing call will ensure that
+	establish_user: function (payload_user, increment_point, set_points, userType) {
+		var userSysID = '';
+		var user = new GlideRecord('x_snc_pointsthing_user');
+
+		switch (userType){
+			case 'slack_id':
+				if(user.get('user_id',payload_user)){
+					user.getRowCount() > 1 ? gs.warn('User ID ' + payload_user + ' is present more than once in the list of PointsThing users') : null;
+					userSysID = user.getUniqueValue();
+				} else {
+					user.newRecord();
+					user.setValue('user_id', payload_user);
+					userSysID = user.insert();
+				}
+				break;
+			case 'name':
+				if(user.get('user_name',payload_user)){
+					user.getRowCount() > 1 ? gs.warn('Username ' + payload_user + ' is present more than once in the list of PointsThing users') : null;
+					userSysID = user.getUniqueValue();
+				} else {
+					user.newRecord();
+					user.setValue('user_name', payload_user);
+					userSysID = user.insert();
+				}
+				break;
+			default:
+				gs.warn('Unhandled payload_user value, ' + payload_user + ', provided. Falling back to ID handling');
+				if(user.get('user_id',payload_user)){
+					user.getRowCount() > 1 ? gs.warn('User ID ' + payload_user + ' is present more than once in the list of PointsThing users') : null;
+					userSysID = user.getUniqueValue();
+				} else {
+					user.newRecord();
+					user.setValue('user_id', payload_user);
+					userSysID = user.insert();
+				}
+		}
+
+		if (increment_point) {
+			var score = parseInt(user.getValue('points'));
+			score++;
+			user.setValue('points', score);
+			user.update();
+		} else if (set_points) {
+			if (user.getValue('points') != set_points) user.setValue('points', set_points);
+			user.update();
+		}
+
+
+		return userSysID;
+	},
+
+    type: 'PointsThingAPI'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>SapphicFire</sys_created_by>
+        <sys_created_on>2023-10-16 10:19:48</sys_created_on>
+        <sys_id>d0f545ef47f9b5104fb86285d36d432a</sys_id>
+        <sys_mod_count>6</sys_mod_count>
+        <sys_name>PointsThingAPI</sys_name>
+        <sys_package display_value="Points Thing" source="x_snc_pointsthing">9c7718cddb229150791d8f8d13961979</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="Points Thing">9c7718cddb229150791d8f8d13961979</sys_scope>
+        <sys_update_name>sys_script_include_d0f545ef47f9b5104fb86285d36d432a</sys_update_name>
+        <sys_updated_by>SapphicFire</sys_updated_by>
+        <sys_updated_on>2023-10-19 10:38:41</sys_updated_on>
+    </sys_script_include>
+</record_update>
