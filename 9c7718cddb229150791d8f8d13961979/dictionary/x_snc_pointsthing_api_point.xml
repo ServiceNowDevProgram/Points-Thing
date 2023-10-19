@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><database>
-    <element label="API Point" max_length="40" name="x_snc_pointsthing_api_point" type="collection">
+    <element db_object_id="d47a3b43473d35104fb86285d36d4380" label="API Point" max_length="40" name="x_snc_pointsthing_api_point" type="collection">
         <element label="Giver" max_length="32" name="giver" reference="x_snc_pointsthing_user" type="reference"/>
+        <element default="1" label="Points" max_length="40" name="points" type="integer"/>
         <element label="Reason" max_length="40" name="reason" type="string"/>
         <element label="Source" max_length="40" name="source" type="string"/>
         <element label="Target" max_length="32" name="target" reference="x_snc_pointsthing_user" type="reference"/>
