@@ -29,7 +29,7 @@
         <role_conditions/>
         <script><![CDATA[(function executeRule(current, previous /*null when async*/) {
 
-	var ppMatches = current.text.match(/!(points?party|pp)/gmi); 
+	var ppMatches = current.text.match(/!(points?party|pp)(?!p)/gmi); 
 
 	if (ppMatches) {
 		new x_snc_pointsthing.PointsThing().points_party(current, true);
@@ -42,12 +42,15 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>dd82e147972a911060bf732e6253af16</sys_id>
+        <sys_mod_count>2</sys_mod_count>
         <sys_name>Handle Points Party</sys_name>
         <sys_overrides/>
         <sys_package display_value="Points Thing" source="x_snc_pointsthing">9c7718cddb229150791d8f8d13961979</sys_package>
         <sys_policy/>
         <sys_scope display_value="Points Thing">9c7718cddb229150791d8f8d13961979</sys_scope>
         <sys_update_name>sys_script_dd82e147972a911060bf732e6253af16</sys_update_name>
+        <sys_updated_by>eriemer</sys_updated_by>
+        <sys_updated_on>2024-04-15 20:10:12</sys_updated_on>
         <template/>
         <when>async_always</when>
     </sys_script>

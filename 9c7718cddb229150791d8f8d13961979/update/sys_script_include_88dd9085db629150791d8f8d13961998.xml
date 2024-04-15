@@ -361,7 +361,8 @@ PointsThing.prototype = {
         }
 
         var grChat = new GlideRecord('x_snc_pointsthing_chat');
-		grChat.addEncodedQuery("channel=" + channel + "^thread_ts=NULL^sys_created_onRELATIVEGT@minute@ago@" + x_snc_pointsthing.party_channel_time);
+		grChat.addEncodedQuery("channel=" + channel + "^thread_ts=NULL^sys_created_onRELATIVEGT@minute@ago@" + gs.getProperty("x_snc_pointsthing.party_channel_time").toString());
+		grChat.addQuery('user', '!=', user_sysid);
         grChat.query();
         while (grChat.next()) {
             recipients.push(grChat.user.getRefRecord().getValue('user_id'));
@@ -389,13 +390,13 @@ PointsThing.prototype = {
         <sys_created_by>earl.duque</sys_created_by>
         <sys_created_on>2022-10-13 03:22:36</sys_created_on>
         <sys_id>88dd9085db629150791d8f8d13961998</sys_id>
-        <sys_mod_count>16</sys_mod_count>
+        <sys_mod_count>21</sys_mod_count>
         <sys_name>PointsThing</sys_name>
         <sys_package display_value="Points Thing" source="x_snc_pointsthing">9c7718cddb229150791d8f8d13961979</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Points Thing">9c7718cddb229150791d8f8d13961979</sys_scope>
         <sys_update_name>sys_script_include_88dd9085db629150791d8f8d13961998</sys_update_name>
         <sys_updated_by>eriemer</sys_updated_by>
-        <sys_updated_on>2024-04-15 19:04:46</sys_updated_on>
+        <sys_updated_on>2024-04-15 20:14:22</sys_updated_on>
     </sys_script_include>
 </record_update>
