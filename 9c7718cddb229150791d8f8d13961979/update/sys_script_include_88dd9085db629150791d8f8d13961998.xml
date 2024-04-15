@@ -9,356 +9,393 @@
         <name>PointsThing</name>
         <script><![CDATA[var PointsThing = Class.create();
 PointsThing.prototype = {
-	initialize: function () {
-		this.token = gs.getProperty("pointsthing.token");
-		this.emojiSet = JSON.parse(new EmojiSet().get());
+    initialize: function() {
+        this.token = gs.getProperty("pointsthing.token");
+        this.emojiSet = JSON.parse(new EmojiSet().get());
 
-	},
+    },
 
-	establish_user: function (payload_user, increment_point, set_points) {
-		var userSysID = '';
-		var user = new GlideRecord('x_snc_pointsthing_user');
-		if (user.get('user_id', payload_user)) {
-			userSysID = user.getUniqueValue();
-		} else {
-			user.newRecord();
-			user.setValue('user_id', payload_user);
-			userSysID = user.insert();
-		}
+    establish_user: function(payload_user, increment_point, set_points) {
+        var userSysID = '';
+        var user = new GlideRecord('x_snc_pointsthing_user');
+        if (user.get('user_id', payload_user)) {
+            userSysID = user.getUniqueValue();
+        } else {
+            user.newRecord();
+            user.setValue('user_id', payload_user);
+            userSysID = user.insert();
+        }
 
-		if (!user.getValue('user_name') || user.getValue('name_updated') < gs.daysAgoStart(0)) {
-			this.get_user_info(payload_user, userSysID); //Update user info once per day, in case of name change.
-		}
+        if (!user.getValue('user_name') || user.getValue('name_updated') < gs.daysAgoStart(0)) {
+            this.get_user_info(payload_user, userSysID); //Update user info once per day, in case of name change.
+        }
 
-		if (increment_point) {
-			var score = parseInt(user.getValue('points'));
-			score++;
-			user.setValue('points', score);
-			user.update();
-		} else if (set_points) {
-			if (user.getValue('points') != set_points) user.setValue('points', set_points);
-			user.update();
-		}
+        if (increment_point) {
+            var score = parseInt(user.getValue('points'));
+            score++;
+            user.setValue('points', score);
+            user.update();
+        } else if (set_points) {
+            if (user.getValue('points') != set_points) user.setValue('points', set_points);
+            user.update();
+        }
 
 
-		return userSysID;
-	},
+        return userSysID;
+    },
 
-	send_chat: function (chat_gr, message, force_thread) {
-		var rm = new sn_ws.RESTMessageV2();
-		rm.setHttpMethod('POST');
-		rm.setEndpoint('https://slack.com/api/chat.postMessage');
-		rm.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-		rm.setRequestHeader("Authorization", "Bearer " + this.token);
-		//rm.setLogLevel('all');
+    send_chat: function(chat_gr, message, force_thread) {
+        var rm = new sn_ws.RESTMessageV2();
+        rm.setHttpMethod('POST');
+        rm.setEndpoint('https://slack.com/api/chat.postMessage');
+        rm.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        rm.setRequestHeader("Authorization", "Bearer " + this.token);
+        //rm.setLogLevel('all');
 
-		var bodyString = '';
-		bodyString += '&channel=' + gs.urlEncode(chat_gr.channel);
-		if (chat_gr.thread_ts) {
-			bodyString += '&thread_ts=' + gs.urlEncode(chat_gr.thread_ts);
-		} else if (force_thread) {
-			bodyString += '&thread_ts=' + gs.urlEncode(chat_gr.ts);
-		}
-		if (typeof message == 'object' && message.blocks) {
-			bodyString += '&text=' + gs.urlEncode(message.text);
-			bodyString += '&blocks=' + gs.urlEncode(JSON.stringify(message.blocks));
-		} else {
-			bodyString += '&text=' + gs.urlEncode(message);
-		}
-		rm.setRequestBody(bodyString);
-		return rm.execute();
-	},
+        var bodyString = '';
+        bodyString += '&channel=' + gs.urlEncode(chat_gr.channel);
+        if (chat_gr.thread_ts) {
+            bodyString += '&thread_ts=' + gs.urlEncode(chat_gr.thread_ts);
+        } else if (force_thread) {
+            bodyString += '&thread_ts=' + gs.urlEncode(chat_gr.ts);
+        }
+        if (typeof message == 'object' && message.blocks) {
+            bodyString += '&text=' + gs.urlEncode(message.text);
+            bodyString += '&blocks=' + gs.urlEncode(JSON.stringify(message.blocks));
+        } else {
+            bodyString += '&text=' + gs.urlEncode(message);
+        }
+        rm.setRequestBody(bodyString);
+        return rm.execute();
+    },
 
-	update_tag_chat: function (send_response, users) {
-		var rm = new sn_ws.RESTMessageV2();
-		rm.setHttpMethod('POST');
-		rm.setEndpoint('https://slack.com/api/chat.update');
-		rm.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-		rm.setRequestHeader("Authorization", "Bearer " + this.token);
-		//rm.setLogLevel('all');
+    update_tag_chat: function(send_response, users) {
+        var rm = new sn_ws.RESTMessageV2();
+        rm.setHttpMethod('POST');
+        rm.setEndpoint('https://slack.com/api/chat.update');
+        rm.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        rm.setRequestHeader("Authorization", "Bearer " + this.token);
+        //rm.setLogLevel('all');
 
-		var responseObj = JSON.parse(send_response.getBody());
+        var responseObj = JSON.parse(send_response.getBody());
 
-		// Replace names with tags
-		var message = responseObj.message.text;
-		for (var user in users) {
-			var expr = new RegExp('\\b' + users[user].name + '\\b(?= \\(| - \\()', "gmi");
-			message = message.replace(expr, '<@' + users[user].id + '>');
-		}
-		var bodyString = '';
-		bodyString += '&channel=' + gs.urlEncode(responseObj.channel);
-		bodyString += '&ts=' + gs.urlEncode(responseObj.ts); // Update format relies on ts, regardless of thread or not
-		bodyString += '&text=' + gs.urlEncode(message);
+        // Replace names with tags
+        var message = responseObj.message.text;
+        for (var user in users) {
+            var expr = new RegExp('\\b' + users[user].name + '\\b(?= \\(| - \\()', "gmi");
+            message = message.replace(expr, '<@' + users[user].id + '>');
+        }
+        var bodyString = '';
+        bodyString += '&channel=' + gs.urlEncode(responseObj.channel);
+        bodyString += '&ts=' + gs.urlEncode(responseObj.ts); // Update format relies on ts, regardless of thread or not
+        bodyString += '&text=' + gs.urlEncode(message);
 
-		rm.setRequestBody(bodyString);
-		return rm.execute();
-	},
+        rm.setRequestBody(bodyString);
+        return rm.execute();
+    },
 
-	get_user_info: function (slack_id, record_id) {
-		var rm = new sn_ws.RESTMessageV2();
-		rm.setHttpMethod('POST');
-		rm.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-		rm.setRequestHeader("Authorization", "Bearer " + gs.getProperty("pointsthing.token"));
-		//rm.setLogLevel('all');
+    get_user_info: function(slack_id, record_id) {
+        var rm = new sn_ws.RESTMessageV2();
+        rm.setHttpMethod('POST');
+        rm.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        rm.setRequestHeader("Authorization", "Bearer " + gs.getProperty("pointsthing.token"));
+        //rm.setLogLevel('all');
 
-		var bodyString = '';
-		bodyString += 'user=' + gs.urlEncode(slack_id);
-		rm.setEndpoint('https://slack.com/api/users.info' + '?' + bodyString);
-		var response = rm.execute();
-		var response_body = JSON.parse(response.getBody());
+        var bodyString = '';
+        bodyString += 'user=' + gs.urlEncode(slack_id);
+        rm.setEndpoint('https://slack.com/api/users.info' + '?' + bodyString);
+        var response = rm.execute();
+        var response_body = JSON.parse(response.getBody());
 
-		if (response_body.user.name) {
-			var grupdate = new GlideRecord('x_snc_pointsthing_user');
-			grupdate.get(record_id);
-			var name = response_body.user.profile[gs.getProperty('x_snc_pointsthing.leaderboard_name')] ? response_body.user.profile[gs.getProperty('x_snc_pointsthing.leaderboard_name')] : response_body.user.profile['real_name'];
-			grupdate.setValue('user_name', name);
-			grupdate.setValue('name_updated', new GlideDateTime());
-			grupdate.update();
-			return true;
-		} else {
-			return false;
-		}
-	},
+        if (response_body.user.name) {
+            var grupdate = new GlideRecord('x_snc_pointsthing_user');
+            grupdate.get(record_id);
+            var name = response_body.user.profile[gs.getProperty('x_snc_pointsthing.leaderboard_name')] ? response_body.user.profile[gs.getProperty('x_snc_pointsthing.leaderboard_name')] : response_body.user.profile['real_name'];
+            grupdate.setValue('user_name', name);
+            grupdate.setValue('name_updated', new GlideDateTime());
+            grupdate.update();
+            return true;
+        } else {
+            return false;
+        }
+    },
 
-	broadcast_points: function (matches, current) {
-		var messages = [];
-		var users_completed = [];
-		for (var i in matches) {
+    broadcast_points: function(matches, current) {
+        var messages = [];
+        var users_completed = [];
+        for (var i in matches) {
 
-			if (users_completed.indexOf(matches[i]) > -1) continue;
-			else users_completed.push(matches[i]);
+            if (users_completed.indexOf(matches[i]) > -1) continue;
+            else users_completed.push(matches[i]);
 
-			if (current.user.user_id == matches[i]) {
-				messages.push('<@' + matches[i] + '> No self points!');
-				continue;
-			} else {
-				var pointsTotal = new GlideRecord("x_snc_pointsthing_user");
-				pointsTotal.get('user_id', matches[i]);
-				var total = pointsTotal.getValue('points');
+            if (current.user.user_id == matches[i]) {
+                messages.push('<@' + matches[i] + '> No self points!');
+                continue;
+            } else {
+                var pointsTotal = new GlideRecord("x_snc_pointsthing_user");
+                pointsTotal.get('user_id', matches[i]);
+                var total = pointsTotal.getValue('points');
 
-				var gaPoints = new GlideAggregate('x_snc_pointsthing_point');
-				gaPoints.addQuery('target', pointsTotal.getUniqueValue());
-				gaPoints.addEncodedQuery('sys_created_onONLast 90 days@javascript:gs.beginningOfLast90Days()@javascript:gs.endOfLast90Days()^targetISNOTEMPTY');
-				gaPoints.addAggregate('COUNT');
-				gaPoints.query();
-				if (gaPoints.next()) {
-					var points = gaPoints.getAggregate('COUNT');
-				}
+                var gaPoints = new GlideAggregate('x_snc_pointsthing_point');
+                gaPoints.addQuery('target', pointsTotal.getUniqueValue());
+                gaPoints.addEncodedQuery('sys_created_onONLast 90 days@javascript:gs.beginningOfLast90Days()@javascript:gs.endOfLast90Days()^targetISNOTEMPTY');
+                gaPoints.addAggregate('COUNT');
+                gaPoints.query();
+                if (gaPoints.next()) {
+                    var points = gaPoints.getAggregate('COUNT');
+                }
 
-				var user = '<@' + matches[i] + '>';
-				var message_gr = this.milestone_check(total);
-				var emoji = ' ' + this.my_points(matches[i]).emoji;
-				var message = new GlideScopedEvaluator().evaluateScript(message_gr, 'message', {
-					'user': user,
-					'total': total,
-					'points': points
-				});
-				if (message_gr.getValue('send_to_channel') === '1') this.send_chat({
-					'channel': gs.getProperty('x_snc_pointsthing.milestone_channel')
-				}, message, false);
-				messages.push([
-					message,
-					'(' + total + ' total)' + emoji
-				].join(' '));
-			}
-		}
-		this.send_chat(current, messages.join('\n'), false);
-	},
+                var user = '<@' + matches[i] + '>';
+                var message_gr = this.milestone_check(total);
+                var emoji = ' ' + this.my_points(matches[i]).emoji;
+                var message = new GlideScopedEvaluator().evaluateScript(message_gr, 'message', {
+                    'user': user,
+                    'total': total,
+                    'points': points
+                });
+                if (message_gr.getValue('send_to_channel') === '1') this.send_chat({
+                    'channel': gs.getProperty('x_snc_pointsthing.milestone_channel')
+                }, message, false);
+                messages.push([
+                    message,
+                    '(' + total + ' total)' + emoji
+                ].join(' '));
+            }
+        }
+        this.send_chat(current, messages.join('\n'), false);
+    },
 
-	milestone_check: function (total) {
-		var milestone = new GlideRecord('x_snc_pointsthing_message');
-		milestone.addQuery('point', total.toString());
-		milestone.query();
-		if (milestone.hasNext()) {
-			var random_milestone = Math.floor(Math.random() * milestone.getRowCount()) + 1;
-			for (var i = 0; i < random_milestone; i++) {
-				milestone.next();
-			}
-			return milestone;
-		} else {
-			var default_message = new GlideRecord('x_snc_pointsthing_message');
-			default_message.addEncodedQuery('point=0^ORpoint=NULL');
-			default_message.query();
-			var random_default = Math.floor(Math.random() * default_message.getRowCount()) + 1;
-			for (var j = 0; j < random_default; j++) {
-				default_message.next();
-			}
-			return default_message;
-		}
-	},
+    milestone_check: function(total) {
+        var milestone = new GlideRecord('x_snc_pointsthing_message');
+        milestone.addQuery('point', total.toString());
+        milestone.query();
+        if (milestone.hasNext()) {
+            var random_milestone = Math.floor(Math.random() * milestone.getRowCount()) + 1;
+            for (var i = 0; i < random_milestone; i++) {
+                milestone.next();
+            }
+            return milestone;
+        } else {
+            var default_message = new GlideRecord('x_snc_pointsthing_message');
+            default_message.addEncodedQuery('point=0^ORpoint=NULL');
+            default_message.query();
+            var random_default = Math.floor(Math.random() * default_message.getRowCount()) + 1;
+            for (var j = 0; j < random_default; j++) {
+                default_message.next();
+            }
+            return default_message;
+        }
+    },
 
-	tell_points: function (chat_gr) {
-		var my_points = this.my_points(chat_gr.user.user_id);
-		var emoji = ' ' + my_points.emoji;
-		this.send_chat(chat_gr, '<@' + chat_gr.user.user_id + '> You have received *' + my_points.points + '* points in the last 90 days, for a total of *' + my_points.total + '* all time.' + emoji, false);
-	},
+    tell_points: function(chat_gr) {
+        var my_points = this.my_points(chat_gr.user.user_id);
+        var emoji = ' ' + my_points.emoji;
+        this.send_chat(chat_gr, '<@' + chat_gr.user.user_id + '> You have received *' + my_points.points + '* points in the last 90 days, for a total of *' + my_points.total + '* all time.' + emoji, false);
+    },
 
-	my_points: function (id) {
-		var count = new GlideAggregate('x_snc_pointsthing_point');
-		count.addEncodedQuery('sys_created_onONLast 90 days@javascript:gs.beginningOfLast90Days()@javascript:gs.endOfLast90Days()^targetISNOTEMPTY');
-		count.addAggregate('COUNT(DISTINCT', 'target');
-		count.setGroup(false);
-		count.query();
-		count.next();
-		var total_users = parseInt(count.getAggregate('COUNT(DISTINCT', 'target'));
+    my_points: function(id) {
+        var count = new GlideAggregate('x_snc_pointsthing_point');
+        count.addEncodedQuery('sys_created_onONLast 90 days@javascript:gs.beginningOfLast90Days()@javascript:gs.endOfLast90Days()^targetISNOTEMPTY');
+        count.addAggregate('COUNT(DISTINCT', 'target');
+        count.setGroup(false);
+        count.query();
+        count.next();
+        var total_users = parseInt(count.getAggregate('COUNT(DISTINCT', 'target'));
 
-		count.orderByAggregate('COUNT', 'target');
-		count.addAggregate('COUNT', 'target');
-		count.setGroup(true);
-		count.query();
-		var rank = 1;
-		while (count.next()) {
-			if (count.target.user_id.includes(id)) {
-				var emoji = '';
-				if (rank == 1) emoji = this.emojiSet.rank1;
-				else if (rank == 2) emoji = this.emojiSet.rank2;
-				else if (rank == 3) emoji = this.emojiSet.rank3;
-				else if (rank < Math.ceil(total_users * .05)) emoji = this.emojiSet.top5;
-				else if (rank < Math.ceil(total_users * .1)) emoji = this.emojiSet.top10;
-				else if (rank < Math.ceil(total_users * .25)) emoji = this.emojiSet.top25;
-				return {
-					'id': id,
-					'points': count.getAggregate('COUNT', 'target'),
-					'total': count.target.points.toString(),
-					'emoji': emoji,
-					'percentile': Math.round(((total_users - rank) / total_users * 100) / 10) * 10,
-					'total_users': total_users,
-					'rank': rank
-				};
-			} else {
-				rank++;
-				continue;
-			}
-		}
-	},
+        count.orderByAggregate('COUNT', 'target');
+        count.addAggregate('COUNT', 'target');
+        count.setGroup(true);
+        count.query();
+        var rank = 1;
+        while (count.next()) {
+            if (count.target.user_id.includes(id)) {
+                var emoji = '';
+                if (rank == 1) emoji = this.emojiSet.rank1;
+                else if (rank == 2) emoji = this.emojiSet.rank2;
+                else if (rank == 3) emoji = this.emojiSet.rank3;
+                else if (rank < Math.ceil(total_users * .05)) emoji = this.emojiSet.top5;
+                else if (rank < Math.ceil(total_users * .1)) emoji = this.emojiSet.top10;
+                else if (rank < Math.ceil(total_users * .25)) emoji = this.emojiSet.top25;
+                return {
+                    'id': id,
+                    'points': count.getAggregate('COUNT', 'target'),
+                    'total': count.target.points.toString(),
+                    'emoji': emoji,
+                    'percentile': Math.round(((total_users - rank) / total_users * 100) / 10) * 10,
+                    'total_users': total_users,
+                    'rank': rank
+                };
+            } else {
+                rank++;
+                continue;
+            }
+        }
+    },
 
-	leaderboard: function (chat_gr, send, all) {
-		var items = [];
-		var lb_tagging = (gs.getProperty('x_snc_pointsthing.leaderboard_tagging') === 'true');
-		try {
-			items.push('Points leaderboard (top ' + (all ? '25%' : '5%') + ' of users in past 90 days):');
-			var count = new GlideAggregate('x_snc_pointsthing_point');
-			count.addEncodedQuery('sys_created_onONLast 90 days@javascript:gs.beginningOfLast90Days()@javascript:gs.endOfLast90Days()^targetISNOTEMPTY');
-			count.addAggregate('COUNT(DISTINCT', 'target');
-			count.setGroup(false);
-			count.query();
-			count.next();
-			var total_users = parseInt(count.getAggregate('COUNT(DISTINCT', 'target'));
-			var top_5_percent = Math.ceil(total_users * .05);
-			var top_10_percent = Math.ceil(total_users * .1);
-			var top_25_percent = Math.ceil(total_users * .25);
+    leaderboard: function(chat_gr, send, all) {
+        var items = [];
+        var lb_tagging = (gs.getProperty('x_snc_pointsthing.leaderboard_tagging') === 'true');
+        try {
+            items.push('Points leaderboard (top ' + (all ? '25%' : '5%') + ' of users in past 90 days):');
+            var count = new GlideAggregate('x_snc_pointsthing_point');
+            count.addEncodedQuery('sys_created_onONLast 90 days@javascript:gs.beginningOfLast90Days()@javascript:gs.endOfLast90Days()^targetISNOTEMPTY');
+            count.addAggregate('COUNT(DISTINCT', 'target');
+            count.setGroup(false);
+            count.query();
+            count.next();
+            var total_users = parseInt(count.getAggregate('COUNT(DISTINCT', 'target'));
+            var top_5_percent = Math.ceil(total_users * .05);
+            var top_10_percent = Math.ceil(total_users * .1);
+            var top_25_percent = Math.ceil(total_users * .25);
 
-			count.orderByAggregate('COUNT', 'target');
-			count.addAggregate('COUNT', 'target');
-			count.setGroup(true);
-			count.query();
+            count.orderByAggregate('COUNT', 'target');
+            count.addAggregate('COUNT', 'target');
+            count.setGroup(true);
+            count.query();
 
-			var rank = 1;
-			var not_displayed = 0;
-			var complete = false;
-			if (lb_tagging) var userArr = [];
-			while (count.next() && !complete) {
-				var item = '';
-				var points = count.getAggregate('COUNT', 'target');
-				var user_name = count.target.user_name.toString();
-				if (lb_tagging) {
-					userArr.push({
-						name: count.target.user_name.toString(),
-						id: count.target.user_id.toString()
-					});
-				}
+            var rank = 1;
+            var not_displayed = 0;
+            var complete = false;
+            if (lb_tagging) var userArr = [];
+            while (count.next() && !complete) {
+                var item = '';
+                var points = count.getAggregate('COUNT', 'target');
+                var user_name = count.target.user_name.toString();
+                if (lb_tagging) {
+                    userArr.push({
+                        name: count.target.user_name.toString(),
+                        id: count.target.user_id.toString()
+                    });
+                }
 
-				if (rank == 1) item = this.emojiSet.rank1 + ' ' + user_name + ' (' + points + ' points)';
-				else if (rank == 2) item = this.emojiSet.rank2 + ' ' + user_name + ' (' + points + ')';
-				else if (rank == 3) item = this.emojiSet.rank3 + ' ' + user_name + ' (' + points + ')';
-				else if (rank > 3 && rank < top_5_percent) item = this.emojiSet.top5 + ' ' + user_name + ' (' + points + ')';
-				else if (all & rank > 3 && rank < top_10_percent) item = this.emojiSet.top10 + ' ' + user_name + ' (' + points + ')';
-				else if (all & rank > 3 && rank < top_25_percent) item = this.emojiSet.top25 + ' ' + user_name + ' (' + points + ')';
-				else if (chat_gr && chat_gr.user && count.target.user_id.includes(chat_gr.user.user_id)) {
-					item = '...' + user_name + ' - (' + points + ' points, ~' + (Math.round(((total_users - rank) / total_users * 100) / 10) * 10) + 'th percentile)';
-					complete = true;
-				} else {
-					rank++;
-					not_displayed++;
-					continue;
-				}
-				rank++;
+                if (rank == 1) item = this.emojiSet.rank1 + ' ' + user_name + ' (' + points + ' points)';
+                else if (rank == 2) item = this.emojiSet.rank2 + ' ' + user_name + ' (' + points + ')';
+                else if (rank == 3) item = this.emojiSet.rank3 + ' ' + user_name + ' (' + points + ')';
+                else if (rank > 3 && rank < top_5_percent) item = this.emojiSet.top5 + ' ' + user_name + ' (' + points + ')';
+                else if (all & rank > 3 && rank < top_10_percent) item = this.emojiSet.top10 + ' ' + user_name + ' (' + points + ')';
+                else if (all & rank > 3 && rank < top_25_percent) item = this.emojiSet.top25 + ' ' + user_name + ' (' + points + ')';
+                else if (chat_gr && chat_gr.user && count.target.user_id.includes(chat_gr.user.user_id)) {
+                    item = '...' + user_name + ' - (' + points + ' points, ~' + (Math.round(((total_users - rank) / total_users * 100) / 10) * 10) + 'th percentile)';
+                    complete = true;
+                } else {
+                    rank++;
+                    not_displayed++;
+                    continue;
+                }
+                rank++;
 
-				items.push(item);
-			}
-		} catch (em) {
-			/*items.push('```Error:');
-			for (var i in em){
-				items.push(i + ': ' + em[i]);
-			}
-			items.push('```');*/
-		} finally {
-			items.push(not_displayed + ' users not displayed');
-		}
+                items.push(item);
+            }
+        } catch (em) {
+            /*items.push('```Error:');
+            for (var i in em){
+            	items.push(i + ': ' + em[i]);
+            }
+            items.push('```');*/
+        } finally {
+            items.push(not_displayed + ' users not displayed');
+        }
 
-		if (send) {
-			items.push('');
-			items.push('https://' + gs.getProperty('instance_name') + '.service-now.com/' + gs.getProperty('x_snc_pointsthing.portal', 'sp') + '?id=leaderboard');
-			if (lb_tagging) {
-				var handleTags = this.send_chat(chat_gr, items.join('\n'), true);
-				this.update_tag_chat(handleTags, userArr);
-			} else {
-				this.send_chat(chat_gr, items.join('\n'), true);
-			}
-		} else return items;
-	},
+        if (send) {
+            items.push('');
+            items.push('https://' + gs.getProperty('instance_name') + '.service-now.com/' + gs.getProperty('x_snc_pointsthing.portal', 'sp') + '?id=leaderboard');
+            if (lb_tagging) {
+                var handleTags = this.send_chat(chat_gr, items.join('\n'), true);
+                this.update_tag_chat(handleTags, userArr);
+            } else {
+                this.send_chat(chat_gr, items.join('\n'), true);
+            }
+        } else return items;
+    },
 
-	points_party: function (chat_gr, send) {
+    points_party: function(chat_gr, send) {
+        var message = '';
+        var thread_ts = chat_gr.getValue('thread_ts');
+        var user_id = chat_gr.user.getRefRecord().getValue('user_id');
+        var user_sysid = chat_gr.getValue('user');
+        var recipients = [];
+
+        if (!thread_ts) {
+            message = 'You cannot throw a points party in public. Get a thread!';
+            this.send_chat(chat_gr, message, false);
+            return null;
+        }
+
+        var grChat = new GlideRecord('x_snc_pointsthing_chat');
+        grChat.addQuery('thread_ts', thread_ts);
+        grChat.addQuery('user', '!=', user_sysid);
+        grChat.query();
+        while (grChat.next()) {
+            recipients.push(grChat.user.getRefRecord().getValue('user_id'));
+        }
+
+        recipients = recipients.filter(function(recipient, idx, arr) {
+            return arr.indexOf(recipient) == idx;
+        });
+
+        recipients.forEach(function(recipient) {
+            // Create points
+            var point = new GlideRecord("x_snc_pointsthing_point");
+            point.newRecord();
+            point.setValue('giver', chat_gr.user);
+            point.setValue('target', new x_snc_pointsthing.PointsThing().establish_user(recipient, true));
+            point.setValue('chat', chat_gr.getUniqueValue());
+            point.insert();
+        });
+
+        this.broadcast_points(recipients, chat_gr);
+    },
+
+    public_points_party: function(chat_gr, send) {
 		var message = '';
-		var thread_ts = chat_gr.getValue('thread_ts');
-		var user_id = chat_gr.user.getRefRecord().getValue('user_id');
-		var user_sysid = chat_gr.getValue('user');
-		var recipients = [];
+		var channel = chat_gr.getValue('channel');
+        var thread_ts = chat_gr.getValue('thread_ts');
+        var user_id = chat_gr.user.getRefRecord().getValue('user_id');
+        var user_sysid = chat_gr.getValue('user');
+        var recipients = [];
 
-		if (!thread_ts) {
-			message = 'You cannot throw a points party in public. Get a thread!';
-			this.send_chat(chat_gr, message, false);
-			return null;
-		}
+        if (thread_ts) {
+            message = 'You cannot throw a public party in a thread. Go outside and touch some grass!';
+            this.send_chat(chat_gr, message, false);
+            return null;
+        }
 
-		var grChat = new GlideRecord('x_snc_pointsthing_chat');
-		grChat.addQuery('thread_ts', thread_ts);
-		grChat.addQuery('user', '!=', user_sysid);
-		grChat.query();
-		while (grChat.next()) {
-			recipients.push(grChat.user.getRefRecord().getValue('user_id'));
-		}
+        var grChat = new GlideRecord('x_snc_pointsthing_chat');
+		grChat.addEncodedQuery("channel=" + channel + "^thread_ts=NULL^sys_created_onRELATIVEGT@minute@ago@" + x_snc_pointsthing.party_channel_time);
+        grChat.query();
+        while (grChat.next()) {
+            recipients.push(grChat.user.getRefRecord().getValue('user_id'));
+        }
 
-		recipients = recipients.filter(function (recipient, idx, arr) {
-			return arr.indexOf(recipient) == idx;
-		});
+        recipients = recipients.filter(function(recipient, idx, arr) {
+            return arr.indexOf(recipient) == idx;
+        });
 
-		recipients.forEach(function (recipient) {
-			// Create points
-			var point = new GlideRecord("x_snc_pointsthing_point");
-			point.newRecord();
-			point.setValue('giver', chat_gr.user);
-			point.setValue('target', new x_snc_pointsthing.PointsThing().establish_user(recipient, true));
-			point.setValue('chat', chat_gr.getUniqueValue());
-			point.insert();
-		});
+        recipients.forEach(function(recipient) {
+            // Create points
+            var point = new GlideRecord("x_snc_pointsthing_point");
+            point.newRecord();
+            point.setValue('giver', chat_gr.user);
+            point.setValue('target', new x_snc_pointsthing.PointsThing().establish_user(recipient, true));
+            point.setValue('chat', chat_gr.getUniqueValue());
+            point.insert();
+        });
 
-		this.broadcast_points(recipients, chat_gr);
-	},
-
-	type: 'PointsThing'
+        this.broadcast_points(recipients, chat_gr);
+    },
+    type: 'PointsThing'
 };]]></script>
         <sys_class_name>sys_script_include</sys_class_name>
         <sys_created_by>earl.duque</sys_created_by>
         <sys_created_on>2022-10-13 03:22:36</sys_created_on>
         <sys_id>88dd9085db629150791d8f8d13961998</sys_id>
-        <sys_mod_count>15</sys_mod_count>
+        <sys_mod_count>16</sys_mod_count>
         <sys_name>PointsThing</sys_name>
         <sys_package display_value="Points Thing" source="x_snc_pointsthing">9c7718cddb229150791d8f8d13961979</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Points Thing">9c7718cddb229150791d8f8d13961979</sys_scope>
         <sys_update_name>sys_script_include_88dd9085db629150791d8f8d13961998</sys_update_name>
-        <sys_updated_by>SapphicFire</sys_updated_by>
-        <sys_updated_on>2023-10-16 10:08:27</sys_updated_on>
+        <sys_updated_by>eriemer</sys_updated_by>
+        <sys_updated_on>2024-04-15 19:04:46</sys_updated_on>
     </sys_script_include>
 </record_update>
