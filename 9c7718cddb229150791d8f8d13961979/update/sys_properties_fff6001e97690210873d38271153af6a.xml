@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties">
+    <sys_properties action="INSERT_OR_UPDATE">
+        <choices/>
+        <description>Number of minutes back that a user needs to have participated in chat to get points from a channel points party (i.e. 90 = anyone that has participated in the mail thread of the channel in the last 90 minutes would get points)</description>
+        <ignore_cache>true</ignore_cache>
+        <is_private>false</is_private>
+        <name>x_snc_pointsthing.party_channel_time</name>
+        <read_roles/>
+        <suffix>party_channel_time</suffix>
+        <sys_class_name>sys_properties</sys_class_name>
+        <sys_created_by>eriemer</sys_created_by>
+        <sys_created_on>2024-04-15 18:18:45</sys_created_on>
+        <sys_id>fff6001e97690210873d38271153af6a</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>x_snc_pointsthing.party_channel_time</sys_name>
+        <sys_package display_value="Points Thing" source="x_snc_pointsthing">9c7718cddb229150791d8f8d13961979</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Points Thing">9c7718cddb229150791d8f8d13961979</sys_scope>
+        <sys_update_name>sys_properties_fff6001e97690210873d38271153af6a</sys_update_name>
+        <sys_updated_by>eriemer</sys_updated_by>
+        <sys_updated_on>2024-04-15 19:19:03</sys_updated_on>
+        <type>integer</type>
+        <value>90</value>
+        <write_roles/>
+    </sys_properties>
+    <sys_translated_text action="delete_multiple" query="documentkey=fff6001e97690210873d38271153af6a"/>
+</record_update>
