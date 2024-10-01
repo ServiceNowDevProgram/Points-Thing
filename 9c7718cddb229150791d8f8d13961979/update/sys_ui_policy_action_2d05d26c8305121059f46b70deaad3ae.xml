@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_policy_action">
+    <sys_ui_policy_action action="INSERT_OR_UPDATE">
+        <cleared>false</cleared>
+        <disabled>ignore</disabled>
+        <field>points</field>
+        <field_message/>
+        <field_message_type>none</field_message_type>
+        <mandatory>true</mandatory>
+        <sys_class_name>sys_ui_policy_action</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-10-01 17:49:47</sys_created_on>
+        <sys_id>2d05d26c8305121059f46b70deaad3ae</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>points</sys_name>
+        <sys_package display_value="Points Thing" source="x_snc_pointsthing">9c7718cddb229150791d8f8d13961979</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Points Thing">9c7718cddb229150791d8f8d13961979</sys_scope>
+        <sys_update_name>sys_ui_policy_action_2d05d26c8305121059f46b70deaad3ae</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-10-01 17:49:47</sys_updated_on>
+        <table>x_snc_pointsthing_api_point</table>
+        <ui_policy display_value="Policy to make few fields mandatory">47549e2c8305121059f46b70deaad31e</ui_policy>
+        <value/>
+        <value_action>ignore</value_action>
+        <visible>ignore</visible>
+    </sys_ui_policy_action>
+    <sys_translated_text action="delete_multiple" query="documentkey=2d05d26c8305121059f46b70deaad3ae"/>
+</record_update>

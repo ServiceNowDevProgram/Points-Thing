@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update>
-    <sys_documentation element="user_name" label="User name" language="en" table="x_snc_pointsthing_user">
+    <sys_documentation element="number" label="Number" language="en" table="x_snc_pointsthing_api_point">
         <sys_documentation action="INSERT_OR_UPDATE">
-            <element>user_name</element>
+            <element>number</element>
             <help/>
             <hint/>
-            <label>User name</label>
+            <label>Number</label>
             <language>en</language>
-            <name>x_snc_pointsthing_user</name>
-            <plural>User names</plural>
+            <name>x_snc_pointsthing_api_point</name>
+            <plural>Numbers</plural>
             <sys_class_name>sys_documentation</sys_class_name>
-            <sys_created_by>earl.duque</sys_created_by>
-            <sys_created_on>2022-10-13 02:55:45</sys_created_on>
-            <sys_mod_count>2</sys_mod_count>
-            <sys_name>User name</sys_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-10-01 17:31:13</sys_created_on>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>Number</sys_name>
             <sys_package display_value="Points Thing" source="x_snc_pointsthing">9c7718cddb229150791d8f8d13961979</sys_package>
             <sys_policy/>
             <sys_scope display_value="Points Thing">9c7718cddb229150791d8f8d13961979</sys_scope>
-            <sys_update_name>sys_documentation_x_snc_pointsthing_user_user_name_en</sys_update_name>
+            <sys_update_name>sys_documentation_x_snc_pointsthing_api_point_number_en</sys_update_name>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-10-01 17:45:25</sys_updated_on>
+            <sys_updated_on>2024-10-01 17:31:13</sys_updated_on>
             <url/>
             <url_target/>
         </sys_documentation>
