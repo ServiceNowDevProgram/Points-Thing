@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><database>
-    <element label="Message" max_length="40" name="x_snc_pointsthing_message" sizeclass="0" type="collection">
-        <element attributes="edge_encryption_enabled=true" label="Message" max_length="256" name="message" type="script"/>
+    <element db_object_id="408c3576834112105380f4b6feaad36b" label="Message" max_length="40" name="x_snc_pointsthing_message" type="collection">
         <element label="Point trigger" max_length="40" name="point" type="integer"/>
-        <element label="Send to channel" max_length="40" name="send_to_channel" type="boolean"/>
+        <element label="Send to milestone channel" max_length="40" name="send_to_channel" type="boolean"/>
+        <element attributes="edge_encryption_enabled=true" label="Message" max_length="256" name="message" type="script"/>
     </element>
 </database>
