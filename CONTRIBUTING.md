@@ -29,7 +29,7 @@ There are placeholders available for system generated values:
 
 - `user`: the @user name that recieved the points
 - `points`: the new number of points that the user has (90 day running total)
-- 'total`: the actual all time total number of points the user has
+- `total`: the actual all time total number of points the user has
 
 An example of a good message would be:
 `'Congrats ' + user + ' you now have ' + points + ' points';`
