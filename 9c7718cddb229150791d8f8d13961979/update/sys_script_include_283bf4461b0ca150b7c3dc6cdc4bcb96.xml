@@ -6,6 +6,7 @@
         <caller_access/>
         <client_callable>false</client_callable>
         <description/>
+        <mobile_callable>false</mobile_callable>
         <name>EmojiSet</name>
         <script><![CDATA[var EmojiSet = Class.create();
 EmojiSet.prototype = {
@@ -14,8 +15,8 @@ EmojiSet.prototype = {
     get: function() {
         var emojiSet = {};
         var prop = gs.getProperty("x_snc_pointsthing.emoji", "STANDARD");
-        
-		switch (prop) {
+
+        switch (prop) {
             case 'PARROTS':
                 emojiSet = {
                     rank1: ':thumbsupparrot:',
@@ -38,17 +39,17 @@ EmojiSet.prototype = {
                 break;
             default: //AKA the Standard Set
                 emojiSet = {
-                    rank1: ':first_place_medal:',
-                    rank2: ':second_place_medal:',
-                    rank3: ':third_place_medal:',
-                    top5: ':star2:',
-                    top10: ':star:',
-                    top25: ':sparkles:'
+                    rank1: ']]>🥇<![CDATA[',
+                    rank2: ']]>🥈<![CDATA[',
+                    rank3: ']]>🥉<![CDATA[',
+                    top5: ']]>🌟<![CDATA[',
+                    top10: '⭐️',
+                    top25: '✨'
                 };
         }
-		
+
         var emoji = JSON.stringify(emojiSet);
-		return emoji;
+        return emoji;
 
     },
     type: 'EmojiSet'
@@ -57,10 +58,24 @@ EmojiSet.prototype = {
         <sys_created_by>eriemer</sys_created_by>
         <sys_created_on>2022-12-29 21:37:49</sys_created_on>
         <sys_id>283bf4461b0ca150b7c3dc6cdc4bcb96</sys_id>
+        <sys_mod_count>1</sys_mod_count>
         <sys_name>EmojiSet</sys_name>
         <sys_package display_value="Points Thing" source="x_snc_pointsthing">9c7718cddb229150791d8f8d13961979</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Points Thing">9c7718cddb229150791d8f8d13961979</sys_scope>
         <sys_update_name>sys_script_include_283bf4461b0ca150b7c3dc6cdc4bcb96</sys_update_name>
+        <sys_updated_by>eriemer</sys_updated_by>
+        <sys_updated_on>2024-10-10 21:02:03</sys_updated_on>
     </sys_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>283bf4461b0ca150b7c3dc6cdc4bcb96</id>
+        <sys_created_by>eriemer</sys_created_by>
+        <sys_created_on>2024-10-10 21:02:02</sys_created_on>
+        <sys_id>4f571de3838dd2105380f4b6feaad357</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>eriemer</sys_updated_by>
+        <sys_updated_on>2024-10-10 21:02:02</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
 </record_update>
