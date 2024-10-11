@@ -15,8 +15,12 @@ To contribute new messages for when points are awarded or milestones are reached
 1. Fork this repo and import it into your instance
 2. In your instance navigate to `Points Thing > Messages`
 3. Add an entry
-4. In Studio, commit your changes to source control
-5. Submit a pull request to the ServiceNowDevProgram/Points-Thing main branch
+4. Return to the Messages list
+5. Check the checkbox next to the Message record you added in the messages list
+6. Right-click on the list header and choose "Create Application Files"
+7. Choose `New install and upgrades` and select OK
+8. In Studio, commit your changes to source control
+9. Submit a pull request to the ServiceNowDevProgram/Points-Thing main branch
 
 ### To create a new message
 
