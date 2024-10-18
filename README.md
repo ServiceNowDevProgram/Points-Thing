@@ -70,6 +70,7 @@ An accepted Pull Request and merge does not necessarily mean the functionality w
 * Scroll down to `Bot Token Scopes`
 * Click the `Add an OAuth Scope` button
 * Search for and select `chat:write`
+* Search for and select `users:read`
 * Navigate to `Settings` > `Install App`
 * Click the `Install to Workspace` button
 * Verify the `view` and `do` permissions
